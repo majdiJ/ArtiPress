@@ -1,1 +1,1 @@
-# SagPress
+# ArtiPress
