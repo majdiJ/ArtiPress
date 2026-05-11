@@ -1,0 +1,46 @@
+/* CSS variables */
+:root {
+    --color-divider: #ccc;
+    --social-icon-filter: invert(100%);
+}
+
+article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.divider-line-horizontal-top {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-divider);
+    margin: 20px 0;
+}
+
+.divider-line-horizontal-bottom {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-divider);
+    margin: 20px 0;
+}
+
+.divider-line-horizontal {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-divider);
+    margin: 20px 0;
+}
+
+.article-sharing-exporting ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.article-sharing-exporting img {
+    width: 21px;
+    height: 21px;
+    margin-right: 7px;
+    filter: var(--social-icon-filter);
+}

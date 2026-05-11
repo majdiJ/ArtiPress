@@ -1,9 +1,20 @@
 {
-  "template_paths": {
-    "article_list": "./artipress_data/templates/article_list.html",
-    "article_page": "./artipress_data/templates/article_page.html",
-    "author_page": "./artipress_data/templates/author_page.html"
-  },
-  "input_articles_folder": "./artipress_data/articles",
-  "generated_output_path": "./output"
+    "base_url": "https://artipress.majdij.com",
+    "website_title": "ArtiPress",
+    "style": {
+        "website_logo": "https://artipress.majdij.com/resource/image/logo.png",
+        "website_favicon": "https://artipress.majdij.com/resource/image/favicon.ico",
+        "apple_touch_icon": "https://artipress.majdij.com/resource/image/apple-touch-icon.png",
+        "theme_color": "#001624",
+        "apple_status_bar_style": "black",
+        "artipress_base_style": "/artipress_data/style/base.css",
+        "custom_style": ""
+    },
+    "template_paths": {
+        "article_list": "/artipress_data/templates/article_list.html",
+        "article_page": "/artipress_data/templates/article_page.html",
+        "author_page": "/artipress_data/templates/author_page.html"
+    },
+    "input_articles_folder": "/artipress_data/articles",
+    "generated_output_path": "/articles"
 }

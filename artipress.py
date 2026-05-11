@@ -41,7 +41,7 @@ def validate_json(filepath: str, required_fields: list[str]) -> dict:
 
 def main():
     # Verify that `artipress_data/artipress.config.json` exists and is valid JSON. 
-    data = validate_json(JSON_CONFIG_FILEPATH, REQUIRED_JSON_CONFIG_FIELDS)
+    config_data = validate_json(JSON_CONFIG_FILEPATH, REQUIRED_JSON_CONFIG_FIELDS)
     pass
 
 if __name__ == "__main__":
