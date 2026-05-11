@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tag(s) -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="index, follow">
+
+    <!-- Site specific meta tags -->
+    <title>Authors - {html_var(website_title)}</title>
+    <link rel="canonical" href="{html_var(base_url)}/articles/authors" />
+    <meta name="description"
+        content="List of authors who have contributed articles to {html_var(website_title)}. Explore the profiles and works of our talented writers." />
+    <meta name="keywords"
+        content="authors, writers, contributors, {html_var(website_title)}, article authors" />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Authors | {html_var(website_title)}">
+    <meta property="og:description"
+        content="List of authors who have contributed articles to {html_var(website_title)}. Explore the profiles and works of our talented writers.">
+    <meta property="og:image" content="{html_var(social_sharing_image_url)}">
+    <meta property="og:url" content="{html_var(base_url)}/articles/authors">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Authors | {html_var(website_title)}">
+    <meta name="twitter:description"
+        content="List of authors who have contributed articles to {html_var(website_title)}. Explore the profiles and works of our talented writers.">
+    <meta name="twitter:image" content="{html_var(social_sharing_image_url)}">
+
+    <!-- Icon(s) and browser styling -->
+    <link rel="icon" href="{html_var(website_favicon)}" />
+    <link rel="apple-touch-icon" href="{html_var(apple_touch_icon)}" />
+    <meta name="theme-color" content="{html_var(theme_color)}" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="{html_var(apple_status_bar_style)}">
+
+    <!-- Style(s) -->
+    <link rel="stylesheet" href="/artipress_data/style/author_list_base.css" />
+    <link rel="stylesheet" href="{html_var(custom_style)}" />
+
+    <!-- Script(s) -->
+    <script src="/artipress_data/scripts/anchor_scroll.js" defer></script>
+</head>
+
+<body>
+
+    <header class="articles-page-header">
+        <h1><a href="/">{html_var(website_title)}</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/articles">All Articles</a></li>
+                <li><a href="/articles/authors">Authors</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="articles-list-page-main">
+        <div class="artipress-authors-list-page-content">
+
+            <div class="page-section page-section-projects" id="projects-header">
+                <h2>Authors</h2>
+            </div>
+
+            <div class="container-authors-list-grid">
+
+                <!-- Sort by name (A-Z) -->
+                
+                <div class="author-card">
+                    <a href="{html_var(base_url)}/articles/author/sample-article-1">
+                        <img src="{html_var(author_avatar_url)}" alt="{html_var(author_name)}'s avatar" class="author-card-avatar">
+                        <div class="text-content">
+                            <h3 class="author-card-name">{html_var(author_name)}</h3>
+                            <p class="author-card-role">{html_var(author_role)}</p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container-page-content-width">
+            <p>
+                &copy; 2026 {html_var(website_title)}.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

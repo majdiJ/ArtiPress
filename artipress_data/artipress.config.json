@@ -7,8 +7,12 @@
         "apple_touch_icon": "https://artipress.majdij.com/resource/image/apple-touch-icon.png",
         "theme_color": "#001624",
         "apple_status_bar_style": "black",
-        "artipress_base_style": "/artipress_data/style/base.css",
         "custom_style": ""
+    },
+    "meta": {
+        "description": "ArtiPress is a static site generator for articles, designed to create fast and SEO-friendly websites.",
+        "keywords": "static site generator, articles, SEO-friendly, fast websites",
+        "social_sharing_image_url": "https://artipress.majdij.com/resource/image/social_sharing.png"
     },
     "template_paths": {
         "article_list": "/artipress_data/templates/article_list.html",
