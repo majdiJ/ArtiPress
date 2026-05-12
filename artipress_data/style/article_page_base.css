@@ -1,6 +1,6 @@
 /* CSS variables */
 :root {
-    --color-divider: #ccc;
+    --color-divider: hsl(0, 0%, 50%);
     --social-icon-filter: invert(100%);
 }
 
@@ -14,23 +14,11 @@ article {
     padding: 20px;
 }
 
-.divider-line-horizontal-top {
-    width: 100%;
-    height: 1px;
-    background-color: var(--color-divider);
-    margin: 20px 0;
-}
-
-.divider-line-horizontal-bottom {
-    width: 100%;
-    height: 1px;
-    background-color: var(--color-divider);
-    margin: 20px 0;
-}
-
+.divider-line-horizontal-top,
+.divider-line-horizontal-bottom,
 .divider-line-horizontal {
-    width: 100%;
     height: 1px;
+    border: none;
     background-color: var(--color-divider);
     margin: 20px 0;
 }
