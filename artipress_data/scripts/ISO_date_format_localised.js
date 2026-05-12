@@ -11,10 +11,15 @@ document.querySelectorAll("time.localised-date").forEach(el => {
         year:  "numeric",
     });
 
-    const timePart = date.toLocaleTimeString(undefined, {
-        hour:   "2-digit",
-        minute: "2-digit",
-    });
+    const isMidnight = date.getUTCHours() === 0 && date.getUTCMinutes() === 0;
 
-    el.textContent = `${datePart} at ${timePart}`;
+    if (isMidnight) {
+        el.textContent = datePart;
+    } else {
+        const timePart = date.toLocaleTimeString(undefined, {
+            hour:   "2-digit",
+            minute: "2-digit",
+        });
+        el.textContent = `${datePart} at ${timePart}`;
+    }
 });

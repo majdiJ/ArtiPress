@@ -4,6 +4,10 @@
     --social-icon-filter: invert(100%);
 }
 
+body {
+    font-family: sans-serif;
+}
+
 article {
     max-width: 800px;
     margin: 0 auto;
@@ -43,4 +47,9 @@ article {
     height: 21px;
     margin-right: 7px;
     filter: var(--social-icon-filter);
+}
+
+article img {
+    max-width: 100%;
+    height: auto;
 }
