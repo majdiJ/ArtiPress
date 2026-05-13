@@ -852,6 +852,11 @@ def main():
         with open(article_json_path, "r", encoding="utf-8") as f:
             article_json = json.load(f)
 
+        # Check to see if article json has `auto_build` field set to false. If it does, skip the generation of this article page and move on to the next one.
+        if article_json.get("auto_build", True) == False:
+            print(f"Skipping article '{article_json.get('article_title', article_id)}' as it has 'auto_build' set to false.")
+            continue
+
         article_template_path = template_paths.get("article_page")
         article_template = read_file(article_template_path)
 

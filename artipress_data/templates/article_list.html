@@ -1,3 +1,21 @@
+<!--
+This is an example article list template.
+You can use this as a base and modify it, or take the variables and sections and pase them into your own template.
+If you do bring/create your own, make sure to update the template path in the config file to point to your new template.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article list template are:
+- `articles_list_styling` -> This variable contains the styling (CSS) needed for the article list part. You can edit this styling.
+- `articles_list_scripts` -> This variable contains any needed script(s) (JS) needed for the article list part. You can edit these scripts.
+- `articles_list` -> This variable contains the actual list of articles in HTML format. You must include this variable where you want the list of articles to be rendered.
+
+These variables must be put in {html_var(...)} format.
+
+You can edit the `article_list_section.css` styling to fit your site. Some other styling files are not recommended to be edited.
+You can edit the article cards layout in the `article_item.html` template component.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,40 +26,19 @@
     <meta name="robots" content="index, follow">
 
     <!-- Site specific meta tags -->
-    <title>Articles - {html_var(website_title)}</title>
-    <link rel="canonical" href="{html_var(base_url)}/articles" />
-    <meta name="description"
-        content="{html_var(meta_description)}" />
-    <meta name="keywords"
-        content="{html_var(meta_keywords)}" />
-
-    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
-    <meta property="og:title" content="Articles | {html_var(website_title)}">
-    <meta property="og:description"
-        content="{html_var(meta_description)}">
-    <meta property="og:image" content="{html_var(social_sharing_image_url)}">
-    <meta property="og:url" content="{html_var(base_url)}/articles">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Articles | {html_var(website_title)}">
-    <meta name="twitter:description"
-        content="{html_var(meta_description)}">
-    <meta name="twitter:image" content="{html_var(social_sharing_image_url)}">
-
-    <!-- Icon(s) and browser styling -->
-    <link rel="icon" href="{html_var(website_favicon)}" />
-    <link rel="apple-touch-icon" href="{html_var(apple_touch_icon)}" />
-    <meta name="theme-color" content="{html_var(theme_color)}" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="{html_var(apple_status_bar_style)}">
+    <title>Articles - ArtiPress</title>
+    <link rel="canonical" href="artipress.majdij.com/articles" />
+    <meta name="description" content="Static site article generator generator and builder without a backened database." />
 
     <!-- Style(s) -->
     <link rel="stylesheet" href="/artipress_data/style/main.css" />
-    <link rel="stylesheet" href="/artipress_data/style/article_list_section.css" />
 
-    <!-- Script(s) -->
-    <script src="/artipress_data/scripts/anchor_scroll.js" defer></script>
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article list template (In the <head> section) -->
+    {html_var(articles_list_styling)}
+    {html_var(articles_list_scripts)}
+    <!-- END ArtiPress (End of needed section)-->
+
 </head>
 
 <body>
@@ -58,86 +55,20 @@
     </header>
 
     <main class="articles-list-page-main">
-        <div class="artipress-articles-list-page-content">
 
-            <div class="page-section page-section-projects" id="projects-header">
-                <h2>Articles</h2>
-            </div>
+        <div class="page-section page-section-projects" id="projects-header">
+            <h2>Articles</h2>
+        </div>
 
-            <div class="artipress-articles-container">
-            
-                <a href="{html_var(article_url)}" class="article-card">
-                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                    <div class="text-content">
-                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
-                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
-                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
-                    </div>
-                </a>
+        <div class="artipress-articles-container"></div>
 
-                <a href="{html_var(article_url)}" class="article-card">
-                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                    <div class="text-content">
-                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
-                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
-                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
-                    </div>
-                </a>
-
-                <a href="{html_var(article_url)}" class="article-card">
-                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                    <div class="text-content">
-                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
-                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
-                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
-                    </div>
-                </a>
-
-                <a href="{html_var(article_url)}" class="article-card">
-                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                    <div class="text-content">
-                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
-                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
-                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
-                    </div>
-                </a>
-
-                <a href="{html_var(article_url)}" class="article-card">
-                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                    <div class="text-content">
-                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
-                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
-                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
-                    </div>
-                </a>
-
-                <a href="{html_var(article_url)}" class="article-card">
-                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                    <div class="text-content">
-                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
-                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
-                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
-                    </div>
-                </a>
-
-                <a href="{html_var(article_url)}" class="article-card">
-                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                    <div class="text-content">
-                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
-                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
-                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
-                    </div>
-                </a>
-            </div>
+            <!-- === ArtiPress ===
+            You must include variable/section below in your article list template (In the <body> section, where you want the list of articles to be rendered) -->
+            {html_var(articles_list)}
+            <!-- END ArtiPress (End of needed section)-->
 
         </div>
+
     </main>
 
     <footer>

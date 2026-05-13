@@ -42,8 +42,8 @@
     flex-direction: column;
 }
 
-.article-card a:hover .text-content h3,
-.article-card a:hover .text-content .article-card-description {
+.article-card:hover .text-content h3,
+.article-card:hover .text-content .article-card-description {
     text-decoration: underline;
 }
 

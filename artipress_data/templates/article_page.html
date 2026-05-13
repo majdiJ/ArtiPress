@@ -1,3 +1,18 @@
+<!--
+This is an example article page template.
+You can use this as a base and modify it, or take the variables and sections and pase them into your own template.
+If you do bring/create your own, make sure to update the template path in the config file to point to your new template.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article list template are:
+- 
+These variables must be put in {html_var(...)} format.
+
+You can edit the `article_list_section.css` styling to fit your site. Some other styling files are not recommended to be edited.
+You can edit the article cards layout in the `article_item.html` template component.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,20 +22,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="robots" content="index, follow">
 
-    <!-- Site specific meta tags -->
+
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article page template (In the <head> section) -->
     <title>{html_var(article_title)} | {html_var(website_title)}</title>
-    <link rel="canonical" href="{html_var(base_url)}/articles/{html_var(article_id)}" />
+    <link rel="canonical" href="{html_var(base_url)}/{html_var(generated_output_path)}/{html_var(article_id)}" />
     <meta name="description" content="{html_var(article_strap_line)}" />
-    <meta name="keywords"
-        content="{html_var(article_keywords_list)}" />
+    <meta name="keywords" content="{html_var(article_keywords_list)}" />
 
     <!-- Article author meta tags will be inserted below -->
     {html_var(author_meta_tags)}
 
     <!-- Open Graph (Facebook, LinkedIn, etc.) -->
     <meta property="og:title" content="{html_var(article_title)} | {html_var(website_title)}">
-    <meta property="og:description"
-        content="{html_var(article_strap_line)}">
+    <meta property="og:description" content="{html_var(article_strap_line)}">
     <meta property="og:image" content="{html_var(article_featured_image)}">
     <meta property="og:url" content="{html_var(base_url)}/articles/{html_var(article_id)}">
     <meta property="og:type" content="article">
@@ -35,26 +51,23 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{html_var(article_title)} | {html_var(website_title)}">
-    <meta name="twitter:description"
-        content="{html_var(article_strap_line)}">
+    <meta name="twitter:description" content="{html_var(article_strap_line)}">
     <meta name="twitter:image" content="{html_var(article_featured_image)}">
+    <!-- END ArtiPress (End of needed section)-->
 
-    <!-- Icon(s) and browser styling -->
-    <link rel="icon" href="{html_var(website_favicon)}" />
-    <link rel="apple-touch-icon" href="{html_var(apple_touch_icon)}" />
-    <meta name="theme-color" content="{html_var(theme_color)}">
-    <meta name="apple-mobile-web-app-status-bar-style" content="{html_var(apple_status_bar_style)}">
+
 
     <!-- Style(s) -->
     <link rel="stylesheet" href="/artipress_data/style/article_page_base.css" />
     <link rel="stylesheet" href="/artipress_data/style/base_md_elements.css" />
-    <link rel="stylesheet" href="{html_var(custom_style)}" />
 
     <!-- Script(s) -->
     <link rel="stylesheet" href="/artipress_data/style/main.css" />
     <script src="/artipress_data/scripts/anchor_scroll.js" defer></script>
     <script src="/artipress_data/scripts/ISO_date_format_localised.js" defer></script>
 
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article list template (In the <head> section, at the bottom) -->
     <script type="application/ld+json">
         {
         "@context": "https://schema.org",
@@ -81,12 +94,14 @@
         "dateModified": "{html_var(article_edited_date_iso_iso)}"
         }
     </script>
+    <!-- END ArtiPress (End of needed section)-->
+
 </head>
 
 <body>
 
     <header class="articles-page-header">
-        <h1><a href="/">{html_var(website_title)}</a></h1>
+        <h1><a href="/">ArtiPress</a></h1>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -98,152 +113,17 @@
 
     <main class="articles-page-main">
 
-        <article>
-            <header>
-                <h1>{html_var(article_title)}</h1>
-                <p class="strap-line">{html_var(article_strap_line)}</p>
-                <p class="author-date">
-                    By {html_var(article_authors)} | Published on {html_var(article_published_date)}{html_var(article_edited_date_iso)}
-                </p>
-            </header>
-
-            <hr class="divider-line-horizontal-top">
-
-            <div class="article-sharing-exporting">
-                <ul>
-                    <li>
-                        <a href="https://twitter.com/intent/tweet?text={html_var(article_title)}%0A{html_var(base_url)}/articles/{html_var(article_id)}/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                            <img src="/artipress_data/images/social-icons/x.png" alt="Twitter/x Icon" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={html_var(base_url)}/articles/{html_var(article_id)}&quote={html_var(article_title)}/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                            <img src="/artipress_data/images/social-icons/facebook.webp" alt="Facebook Icon" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={html_var(base_url)}/articles/{html_var(article_id)}/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                            <img src="/artipress_data/images/social-icons/linkedin.png" alt="LinkedIn Icon" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.threads.net/intent/post?text={html_var(article_title)}%0A{html_var(base_url)}/articles/{html_var(article_id)}/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                            <img src="/artipress_data/images/social-icons/threads.png" alt="Threads Icon" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://wa.me/?text=https%3A%2F%2F{html_var(base_url)}%2Farticles%2F{html_var(article_id)}%2F%3Futm_source%3Dwhatsapp%26utm_medium%3Dsocial%26utm_content%3Dpost" target="_blank" rel="noopener noreferrer">
-                            <img src="/artipress_data/images/social-icons/whatsapp.png" alt="WhatsApp Icon" />
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="navigator.clipboard.writeText('{html_var(base_url)}/articles/{html_var(article_id)}/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
-                            <img src="/artipress_data/images/social-icons/link.svg" alt="Copy Link Icon" />
-                        </a>
-                    </li>
-                    <li>
-                        <a id="printNew">
-                            <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <hr class="divider-line-horizontal-bottom">
-
-            <div class="article-image-container article-content featured-article-image">
-                <img src="{html_var(article_image_url)}"
-                    alt="{html_var(article_image_alt)}"/>
-            </div>
-
-            <div class="article-content">
-
-                {html_var(article_html_content)}
-                
-            </div>
-
-            <hr class="divider-line-horizontal">
-
-            <footer>
-                <p class="author-date">
-                    By {html_var(article_authors)} | Published on {html_var(article_published_date)}{html_var(article_edited_date_iso)}
-                </p>
-            </footer>
-        </article>
-
-        <script>
-            document.getElementById('printNew').addEventListener('click', async (ev) => {
-            ev.preventDefault();
-
-            const pdfUrl = '/articles/{html_var(article_id)}/article.pdf';
-
-            const popup = window.open('', '_blank');
-            if (!popup) {
-                alert('Popup blocked — allow popups for this site or try the iframe method.');
-                return;
-            }
-
-            try {
-                const resp = await fetch(pdfUrl, { method: 'GET', cache: 'no-store' });
-                if (!resp.ok) {
-                popup.close();
-                alert('Could not load PDF (HTTP ' + resp.status + ').');
-                return;
-                }
-
-                const blob = await resp.blob();
-                const blobUrl = URL.createObjectURL(blob);
-
-                // Write a minimal page into the popup which embeds the PDF and triggers printing
-                popup.document.open();
-                popup.document.write(`
-                <!doctype html>
-                <html>
-                <head>
-                    <meta charset="utf-8">
-                    <title>Print</title>
-                    <style>html,body{height:100%;margin:0}</style>
-                </head>
-                <body>
-                    <iframe id="pdfFrame" src="${blobUrl}" style="border:0;width:100vw;height:100vh;"></iframe>
-                    <script>
-                    const iframe = document.getElementById('pdfFrame');
-                    // Some PDF viewers don't fire onload, so try a couple of strategies:
-                    iframe.onload = () => {
-                        try {
-                        // focus and attempt to call print on the iframe's contentWindow
-                        window.focus();
-                        iframe.contentWindow.print();
-                        } catch (e) {
-                        // Last resort: call print on the wrapper
-                        try { window.print(); } catch (err) { /* ignore */ }
-                        }
-                        // free the blob URL a little later
-                        setTimeout(() => { try { URL.revokeObjectURL('${blobUrl}'); } catch(e){} }, 10000);
-                    };
-                    // also try an automatic timeout fallback in case onload doesn't fire
-                    setTimeout(() => { try { window.focus(); window.print(); } catch(e){} }, 2000);
-                    <\/script>
-                </body>
-                </html>
-                `);
-                popup.document.close();
-
-            } catch (err) {
-                console.error('Error fetching/printing PDF', err);
-                // fallback: navigate popup to the PDF URL (will at least let user view it)
-                popup.location.href = pdfUrl;
-            }
-            });
-        </script>
-
+        <!-- === ArtiPress ===
+        You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+        {html_var(main_article_element)}
+        <!-- END ArtiPress (End of needed section)-->
 
     </main>
 
     <footer>
         <div class="container-page-content-width">
             <p>
-                &copy; 2026 {html_var(website_title)}.
+                &copy; 2026 ArtiPress. All rights reserved.
             </p>
         </div>
     </footer>
