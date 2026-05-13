@@ -1,0 +1,91 @@
+/* CSS Variables */
+:root {
+    --article-card-width: 350px;
+    --gap-between-cards: 20px;
+    --article-card-border-color: hsl(0, 0%, 75%);
+    --article-card-border-radius: 0px;
+
+    --article-text-content-padding-top: 6px;
+    --article-text-content-padding-side: 15px;
+    --article-text-content-padding-bottom: 7px;
+
+    --article-label-color: hsl(0, 0%, 45%);
+
+    --article-title-color: black;
+    --article_title-font-size: 1.1rem;
+
+    --article-description-color: hsl(0, 0%, 20%);
+    --article-description-font-size: 0.95rem;
+
+    --article-author-date-color: hsl(0, 0%, 50%);
+    --article-author-date-font-size: 0.85rem;
+
+}
+
+.artipress-articles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--article-card-width));
+    gap: var(--gap-between-cards);
+    justify-content: center; /* centers the grid columns, not the items within a row */
+}
+
+.article-card {
+    width: var(--article-card-width);
+    height: 100%;
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid var(--article-card-border-color);
+    border-radius: var(--article-card-border-radius);
+    display: flex;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+    flex-direction: column;
+}
+
+.article-card a:hover .text-content h3,
+.article-card a:hover .text-content .article-card-description {
+    text-decoration: underline;
+}
+
+.article-card img {
+    width: 100%;
+    height: auto;
+}
+
+.article-card .text-content {
+    padding: var(--article-text-content-padding-top) var(--article-text-content-padding-side) var(--article-text-content-padding-bottom);
+}
+
+.article-card .text-content .article-card-labels {
+    margin: 0px 0 4px 0;
+    display: flex;
+    gap: 0.55em;
+}
+
+.article-card .text-content .article-card-labels .article-card-label {
+    font-size: 0.75rem;
+    color: var(--article-label-color);
+}
+
+.article-card .text-content h3 {
+    margin: 0px 0 8px 0;
+    font-size: var(--article_title-font-size);
+    color: var(--article-title-color);
+}
+
+.article-card .text-content p {
+    margin: 0;
+}
+
+.article-card .text-content .article-card-description {
+    margin: 0 0 10px 0;
+    font-size: var(--article-description-font-size);
+    color: var(--article-description-color);
+}
+
+.article-card .text-content .article-card-author-and-date {
+    margin: 0 0 10px 0;
+    font-size: var(--article-author-date-font-size);
+    color: var(--article-author-date-color);
+}
+

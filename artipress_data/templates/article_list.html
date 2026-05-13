@@ -37,8 +37,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="{html_var(apple_status_bar_style)}">
 
     <!-- Style(s) -->
-    <link rel="stylesheet" href="/artipress_data/style/article_list_base.css" />
-    <link rel="stylesheet" href="{html_var(custom_style)}" />
+    <link rel="stylesheet" href="/artipress_data/style/main.css" />
+    <link rel="stylesheet" href="/artipress_data/style/article_list_section.css" />
 
     <!-- Script(s) -->
     <script src="/artipress_data/scripts/anchor_scroll.js" defer></script>
@@ -47,7 +47,7 @@
 <body>
 
     <header class="articles-page-header">
-        <h1><a href="/">{html_var(website_title)}</a></h1>
+        <h1><a href="/">ArtiPress</a></h1>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -64,56 +64,77 @@
                 <h2>Articles</h2>
             </div>
 
-            <div class="container-articles-list-grid">
-                
-                <div class="article-card">
-                    <a href="{html_var(base_url)}/articles/sample-article-1">
-                        <img src="{html_var(article_image_url)}" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                        <div class="text-content">
-                            <h3 class="article-card-title">{html_var(article_title)}</h3>
-                            <p class="article-card-description">{html_var(article_strap_line)}</p>
-                            <p class="article-card-labels">{html_var(article_labels)}</p>
-                            <p class="article-card-author-and-date">{html_var(article_author)} - {html_var(article_date)}</p>
-                        </div>
-                    </a>
-                </div>
+            <div class="artipress-articles-container">
+            
+                <a href="{html_var(article_url)}" class="article-card">
+                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
+                    <div class="text-content">
+                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
+                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
+                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
+                    </div>
+                </a>
 
-                <div class="article-card">
-                    <a href="{html_var(base_url)}/articles/sample-article-1">
-                        <img src="{html_var(article_image_url)}" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                        <div class="text-content">
-                            <h3 class="article-card-title">{html_var(article_title)}</h3>
-                            <p class="article-card-description">{html_var(article_strap_line)}</p>
-                            <p class="article-card-labels">{html_var(article_labels)}</p>
-                            <p class="article-card-author-and-date">{html_var(article_author)} - {html_var(article_date)}</p>
-                        </div>
-                    </a>
-                </div>
+                <a href="{html_var(article_url)}" class="article-card">
+                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
+                    <div class="text-content">
+                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
+                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
+                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
+                    </div>
+                </a>
 
-                <div class="article-card">
-                    <a href="{html_var(base_url)}/articles/sample-article-1">
-                        <img src="{html_var(article_image_url)}" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                        <div class="text-content">
-                            <h3 class="article-card-title">{html_var(article_title)}</h3>
-                            <p class="article-card-description">{html_var(article_strap_line)}</p>
-                            <p class="article-card-labels">{html_var(article_labels)}</p>
-                            <p class="article-card-author-and-date">{html_var(article_author)} - {html_var(article_date)}</p>
-                        </div>
-                    </a>
-                </div>
+                <a href="{html_var(article_url)}" class="article-card">
+                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
+                    <div class="text-content">
+                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
+                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
+                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
+                    </div>
+                </a>
 
-                <div class="article-card">
-                    <a href="{html_var(base_url)}/articles/sample-article-1">
-                        <img src="{html_var(article_image_url)}" alt="{html_var(article_title)}" class="article-card-thumbnail" />
-                        <div class="text-content">
-                            <h3 class="article-card-title">{html_var(article_title)}</h3>
-                            <p class="article-card-description">{html_var(article_strap_line)}</p>
-                            <p class="article-card-labels">{html_var(article_labels)}</p>
-                            <p class="article-card-author-and-date">{html_var(article_author)} - {html_var(article_date)}</p>
-                        </div>
-                    </a>
-                </div>
+                <a href="{html_var(article_url)}" class="article-card">
+                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
+                    <div class="text-content">
+                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
+                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
+                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
+                    </div>
+                </a>
 
+                <a href="{html_var(article_url)}" class="article-card">
+                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
+                    <div class="text-content">
+                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
+                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
+                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
+                    </div>
+                </a>
+
+                <a href="{html_var(article_url)}" class="article-card">
+                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
+                    <div class="text-content">
+                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
+                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
+                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
+                    </div>
+                </a>
+
+                <a href="{html_var(article_url)}" class="article-card">
+                    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="{html_var(article_title)}" class="article-card-thumbnail" />
+                    <div class="text-content">
+                        <p class="article-card-labels"><span class="article-card-label">Label 1</span> <span class="article-card-label">Label 2</span> <span class="article-card-label">Label 3</span></p>
+                        <h3 class="article-card-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+                        <p class="article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, eaque.</p>
+                        <p class="article-card-author-and-date">John Doe | January 1, 2024</p>
+                    </div>
+                </a>
             </div>
 
         </div>
@@ -122,7 +143,7 @@
     <footer>
         <div class="container-page-content-width">
             <p>
-                &copy; 2026 {html_var(website_title)}.
+                &copy; 2026 ArtiPress. All rights reserved.
             </p>
         </div>
     </footer>
