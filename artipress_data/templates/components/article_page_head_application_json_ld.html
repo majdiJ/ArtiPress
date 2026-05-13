@@ -1,0 +1,26 @@
+<script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{html_var(base_url)}/articles/{html_var(article_id)}"
+    },
+    "headline": "{html_var(article_title)}",
+    "description": "{html_var(article_strap_line)}",
+    "image": [
+        "{html_var(article_featured_image)}"
+    ],
+    "author": {html_var(json_ld_authors)},
+    "publisher": {
+        "@type": "Organization",
+        "name": "{html_var(website_title)}",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "{html_var(website_logo)}"
+        }
+    },
+    "datePublished": "{html_var(article_published_date_iso)}",
+    "dateModified": "{html_var(article_edited_date_iso_iso)}"
+    }
+</script>

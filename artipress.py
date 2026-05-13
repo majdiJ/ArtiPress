@@ -22,6 +22,22 @@ RESERVED_FOLDERS_IN_ARTICLES = [
     ]
 AUTHOR_JSON_PATH = "artipress_data/authors/authors.json"
 
+CONFIG_DEFAULTS = {
+    "base_url": "http://artipress.majdij.com",
+    "website_title": "ArtiPress",
+    "website_favicon": "https://artipress.majdij.com/resources/images/favicon.png",
+    "apple_touch_icon": "https://artipress.majdij.com/resources/images/apple-touch-icon.png",
+    "theme_color": "#000000",
+    "apple_status_bar_style": "default",
+    "custom_style": "",
+    "website_logo": "https://artipress.majdij.com/resources/images/logo.png",
+    "input_articles_folder": "artipress_data/articles",
+    "template_paths": {},
+    "generated_output_path": "articles",
+}
+
+CONFIG = {}
+
 def get_nested(data: dict, key: str):
     """
     Retrieve a value from a nested dictionary using a dot-notation key. Returns None if any part of the path is missing.
@@ -119,9 +135,9 @@ def make_author_og_meta_tag(article_data: dict) -> str:
     for author_slug in article_data["author_slugs"]:
         author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
         if og_meta_tags == "":
-            og_meta_tags += f"<meta property=\"article:author\" content=\"{base_url}/authors/{author_slug}\" />"
+            og_meta_tags += f"<meta property=\"article:author\" content=\"{CONFIG['base_url']}/authors/{author_slug}\" />"
         else:
-            og_meta_tags += f"\n<meta property=\"article:author\" content=\"{base_url}/authors/{author_slug}\" />"
+            og_meta_tags += f"\n<meta property=\"article:author\" content=\"{CONFIG['base_url']}/authors/{author_slug}\" />"
 
     return og_meta_tags
 
@@ -133,7 +149,7 @@ def make_author_ld_json(article_data: dict) -> str:
         author_ld_json = {
             "@type": "Person",
             "name": author_info.get("author_name", "Unknown Author"),
-            "url": f"{base_url}/authors/{author_slug}"
+            "url": f"{CONFIG['base_url']}/authors/{author_slug}"
         }
         authors_ld_json.append(author_ld_json)
 
@@ -146,9 +162,9 @@ def make_author_html_element(article_data: dict) -> str:
         author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
 
         if html_authors_info == "":
-            html_authors_info += f"<a href='{base_url}/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
+            html_authors_info += f"<a href='{CONFIG['base_url']}/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
         else:
-            html_authors_info += f", <a href='{base_url}/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
+            html_authors_info += f", <a href='{CONFIG['base_url']}/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
     
     return html_authors_info
 
@@ -749,8 +765,8 @@ def generate_article_page(article_id: str, article_data: dict, template: str, ar
 
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
-        "website_title": website_title,
-        "base_url": base_url,
+        "website_title": CONFIG["website_title"],
+        "base_url": CONFIG["base_url"],
         "article_id": article_id,
         "article_strap_line": article_data.get("article_strap_line", ""),
         "article_keywords_list": ", ".join(article_data.get("article_keywords", [])),
@@ -759,12 +775,12 @@ def generate_article_page(article_id: str, article_data: dict, template: str, ar
         "article_published_date_iso": ISO_published_date,
         "article_edited_date_iso_iso": ISO_edited_date,
         "og_meta_tags_authors": og_meta_tags_authors,
-        "website_favicon": website_favicon,
-        "apple_touch_icon": apple_touch_icon,
-        "theme_color": theme_color,
-        "apple_status_bar_style": apple_status_bar_style,
-        "custom_style": custom_style,
-        "website_logo": website_logo,
+        "website_favicon": CONFIG["website_favicon"],
+        "apple_touch_icon": CONFIG["apple_touch_icon"],
+        "theme_color": CONFIG["theme_color"],
+        "apple_status_bar_style": CONFIG["apple_status_bar_style"],
+        "custom_style": CONFIG["custom_style"],
+        "website_logo": CONFIG["website_logo"],
         "json_ld_authors": json_ld_authors,
         "article_authors": html_authors_info,
         "article_published_date": published_date_element,
@@ -785,29 +801,9 @@ def main():
     config_data = validate_json(JSON_CONFIG_FILEPATH, REQUIRED_JSON_CONFIG_FIELDS)
     pass
 
-    # Set global variables
-    global base_url
-    base_url = config_data.get("base_url", "http://artipress.majdij.com")
-    global website_title
-    website_title = config_data.get("website_title", "ArtiPress")
-    global website_favicon
-    website_favicon = config_data.get("website_favicon", "https://artipress.majdij.com/resources/images/favicon.png")
-    global apple_touch_icon
-    apple_touch_icon = config_data.get("apple_touch_icon", "https://artipress.majdij.com/resources/images/apple-touch-icon.png")
-    global theme_color
-    theme_color = config_data.get("theme_color", "#000000")
-    global apple_status_bar_style
-    apple_status_bar_style = config_data.get("apple_status_bar_style", "default")
-    global custom_style
-    custom_style = config_data.get("custom_style", "")
-    global website_logo
-    website_logo = config_data.get("website_logo", "https://artipress.majdij.com/resources/images/logo.png")
-    global input_articles_folder
-    input_articles_folder = config_data.get("input_articles_folder", "artipress_data/articles")
-    global template_paths
-    template_paths = config_data.get("template_paths", {})
-    global generated_output_path
-    generated_output_path = config_data.get("generated_output_path", "articles")
+    # Merge defaults with loaded config and expose it globally
+    global CONFIG
+    CONFIG = {**CONFIG_DEFAULTS, **config_data}
 
     # 1. Go through each article folder in `input_articles_folder` and validate that it contains an `article.json` file with the required fields. If any article folder is missing the `article.json` file or if the JSON is invalid or missing required fields, raise an error with a descriptive message indicating which article folder is invalid and what the issue is, stopping the generation process until all issues are resolved.
 
@@ -823,7 +819,7 @@ def main():
     # --- 1. Validate article folders and their `article.json` files ---
     
     # Get list of article folders in `input_articles_folder`
-    article_folders = get_folders(config_data["input_articles_folder"])
+    article_folders = get_folders(CONFIG["input_articles_folder"])
 
     # Dev: Print the article folders found (for now)
     print("Article folders found:")
@@ -832,7 +828,7 @@ def main():
 
     # For each article folder, validate the presence and contents of `article.json`
     for folder in article_folders:
-        article_json_path = os.path.join(config_data["input_articles_folder"], folder, "article.json")
+        article_json_path = os.path.join(CONFIG["input_articles_folder"], folder, "article.json")
         try:
             article_data = validate_json(article_json_path, REQUIRED_JSON_ARTICLE_FIELDS)
             print(f"Validated article: {article_data['article_title']}")
@@ -848,7 +844,7 @@ def main():
     for folder in article_folders:
         article_id = folder # article_id is the same as the folder name
 
-        article_json_path = os.path.join(config_data["input_articles_folder"], folder, "article.json")
+        article_json_path = os.path.join(CONFIG["input_articles_folder"], folder, "article.json")
         with open(article_json_path, "r", encoding="utf-8") as f:
             article_json = json.load(f)
 
@@ -857,13 +853,13 @@ def main():
             print(f"Skipping article '{article_json.get('article_title', article_id)}' as it has 'auto_build' set to false.")
             continue
 
-        article_template_path = template_paths.get("article_page")
+        article_template_path = CONFIG["template_paths"].get("article_page")
         article_template = read_file(article_template_path)
 
-        article_md_path = os.path.join(config_data["input_articles_folder"], folder, "article.md")
+        article_md_path = os.path.join(CONFIG["input_articles_folder"], folder, "article.md")
         article_md_content = read_file(article_md_path)
 
-        output_path = os.path.join(generated_output_path, article_id, "index.html")
+        output_path = os.path.join(CONFIG["generated_output_path"], article_id, "index.html")
 
         # Generate the article page
         generate_article_page(article_id, article_json, article_template, article_md_content, output_path)
