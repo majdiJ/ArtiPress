@@ -734,75 +734,6 @@ def render_template(template: str, variables: dict) -> str:
 
     return re.sub(r'\{html_var\((\w+)\)\}', replacer, template)
 
-def generate_article_page_OLD(article_id: str, article_data: dict, template: str, article_md_content: str, output_path: str):
-
-    # Construct author meta tags
-    author_meta_tags = make_author_meta_tag(article_data)
-
-    # Construct Open Graph author meta tags
-    og_meta_tags_authors = make_author_og_meta_tag(article_data)
-
-    # Construct application/ld+json author structured data
-    json_ld_authors = make_author_ld_json(article_data)
-
-    # Construct author HTML element
-    html_authors_info = make_author_html_element(article_data)
-
-    # Construct published date
-    ISO_published_date = article_data.get("date", {}).get("published", "")
-    published_date_element = f'<time class="localised-date" datetime="{ISO_published_date}">{ISO_published_date}</time>'
-
-    # Construct edited date (if it exists and has a value)
-    ISO_edited_date = ""
-    edited_date_element = ""
-    if article_data.get("date", {}).get("edited") not in (None, ""):
-        ISO_edited_date = article_data.get("date", {}).get("edited", "")
-        edited_date_element = f' | Edited on <time class="localised-date" datetime="{ISO_edited_date}">{ISO_edited_date}</time>'
-
-    # Need to make a function that converts MD into HTML
-    article_html_content = markdown_to_html(article_md_content)
-
-    replacement_vars = {
-        "article_title": article_data.get("article_title", "Untitled Article"),
-        "website_title": CONFIG["website_title"],
-        "base_url": CONFIG["base_url"],
-        "article_id": article_id,
-        "article_strap_line": article_data.get("article_strap_line", ""),
-        "article_keywords_list": ", ".join(article_data.get("article_keywords", [])),
-        "author_meta_tags": author_meta_tags,
-        "article_featured_image": article_data.get("article_image_url", ""),
-        "article_published_date_iso": ISO_published_date,
-        "article_edited_date_iso_iso": ISO_edited_date,
-        "og_meta_tags_authors": og_meta_tags_authors,
-        "json_ld_authors": json_ld_authors,
-        "article_authors": html_authors_info,
-        "article_published_date": published_date_element,
-        "article_edited_date_iso": edited_date_element,
-        "article_image_url": article_data.get("article_image_url", ""),
-        "article_image_alt": article_data.get("article_image_alt", ""),
-        "article_html_content": article_html_content,
-    }
-
-    # Render the final html 
-    final_html = render_template(template, replacement_vars)
-
-    # Save the rendered template to the output path
-    write_file(output_path, final_html)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def validate_article_folders(article_folders):
@@ -827,7 +758,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
     # Combine the 3 templates components into one article page base template
     base_page_template = render_template(article_page_template, {
         "article_page_head_metadata": read_file(CONFIG["components_template_paths"].get("article_page_head_metadata")),
-        "articles_page_styling_and_scripts": "",
+        "articles_page_styling_and_scripts": read_file(CONFIG["components_template_paths"].get("articles_page_styling_and_scripts")),
         "article_page_head_application_json_ld": read_file(CONFIG["components_template_paths"].get("article_page_head_application_json_ld")),
         "article_page_main_article": read_file(CONFIG["components_template_paths"].get("article_page_main_article")),
     })

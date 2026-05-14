@@ -59,10 +59,14 @@ You can edit the article cards layout in the `article_item.html` template compon
 
     <main class="articles-page-main">
 
-        <!-- === ArtiPress ===
-        You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
-        {html_var(article_page_main_article)}
-        <!-- END ArtiPress (End of needed section)-->
+        <!-- You are recommended to put the article main content var within a div with a class, and style the article layout/size using that class -->
+
+        <div class="artipress-article-container">
+            <!-- === ArtiPress ===
+            You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+            {html_var(article_page_main_article)}
+            <!-- END ArtiPress (End of needed section)-->
+        </div>
 
     </main>
 

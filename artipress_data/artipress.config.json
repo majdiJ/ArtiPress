@@ -14,6 +14,7 @@
     },
     "components_template_paths": {
         "article_page_head_metadata": "artipress_data/templates/components/article_page_head_metadata.html",
+        "articles_page_styling_and_scripts": "artipress_data/templates/components/articles_page_styling_and_scripts.html",
         "article_page_head_application_json_ld": "artipress_data/templates/components/article_page_head_application_json_ld.html",
         "article_page_main_article": "artipress_data/templates/components/article_page_main_article.html",
         "articles_list_styling": "artipress_data/templates/components/articles_list_styling.html",

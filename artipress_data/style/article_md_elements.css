@@ -14,6 +14,11 @@
     margin-bottom: 0.75rem;
 }
 
+.article-content h4 {
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
 .article-content hr {
     border: none;
     border-top: 1px solid hsl(0, 0%, 75%);
