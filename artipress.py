@@ -813,6 +813,56 @@ def generate_all_article_pages():
         output_path = os.path.join(CONFIG["generated_output_path"], folder, "index.html")
         generate_article_page(folder, article_data, output_path)
 
+
+def generate_article_list_page():
+
+    article_folders = get_folders(CONFIG["input_articles_folder"])
+    validated_articles = validate_article_folders(article_folders)
+
+    article_list_template = read_file(CONFIG["base_template_paths"].get("article_list"))
+    article_list_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("article_list_styling_and_scripts"))
+    article_list_item_template = read_file(CONFIG["components_template_paths"].get("article_list_item"))
+
+    output_path = os.path.join(CONFIG["generated_output_path"], "index.html")
+
+    article_list_items_html = ""
+
+    # For each article, render an article list item using `article_list_item_template` and the article's data
+    for folder, article_data in validated_articles:
+
+        article_labels = ""
+        for label in article_data.get("article_labels", []):
+            article_labels += f"<span class=\"article-card-label\">{label}</span>"
+
+        article_authors = ""
+        for author_slug in article_data["author_slugs"]:
+            author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
+            # If multiple authors, separate with comma and space
+            if article_authors != "":
+                article_authors += ", "
+            article_authors += f"<a href='{CONFIG['base_url']}/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
+            
+
+        article_list_items_html += render_template(article_list_item_template, {
+            "article_title": article_data.get("article_title", "Untitled Article"),
+            "article_strap_line": article_data.get("article_strap_line", ""),
+            "article_labels": article_labels,
+            "article_authors": article_authors,
+            "article_published_date": f'<time class="localised-date" datetime="{article_data.get("date", {}).get("published", "")}">{article_data.get("date", {}).get("published", "")}</time>',
+            "article_image_url": article_data.get("article_image_url", ""),
+            "article_image_alt": article_data.get("article_image_alt", ""),
+            "article_url": f"{CONFIG['base_url']}/{folder}/index.html",
+        })
+
+    # Render the article list template with the generated article list items
+    final_html = render_template(article_list_template, {
+        "article_list_styling_and_scripts": article_list_styling_and_scripts,
+        "article_list_items": article_list_items_html,
+    })
+
+    # Save the rendered template to the output path
+    write_file(output_path, final_html)
+
 def main():
     # Verify that `artipress_data/artipress.config.json` exists and is valid JSON. 
     config_data = validate_json(JSON_CONFIG_FILEPATH, REQUIRED_JSON_CONFIG_FIELDS)
@@ -833,6 +883,7 @@ def main():
     #5. Once all author pages are generated, update the article list page to include links to the author pages where the author's name, avatar, and other data is displayed.
 
     generate_all_article_pages()
+    generate_article_list_page()
 
 
 
