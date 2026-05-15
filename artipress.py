@@ -9,14 +9,14 @@ CONFIG_DEFAULTS = {
     "website_logo_url": "https://artipress.majdij.com/resources/images/logo.png",
     "input_articles_folder": "artipress_data/articles",
     "base_template_paths": {},
-    "generated_output_path": "articles",
+    "generated_articles_output_path": "articles",
 }
 REQUIRED_JSON_CONFIG_FIELDS = [
     "base_template_paths.article_list",
     "base_template_paths.article_page",
     "base_template_paths.author_page",
     "input_articles_folder",
-    "generated_output_path",
+    "generated_articles_output_path",
 ]
 
 JSON_ARTICLE_FILEPATH = "article.json"
@@ -777,7 +777,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
         "website_title": CONFIG["website_title"],
-        "generated_output_path": CONFIG["generated_output_path"],
+        "generated_articles_output_path": CONFIG["generated_articles_output_path"],
         "base_url": CONFIG["base_url"],
         "article_id": article_slug,
         "article_strap_line": article_data.get("article_strap_line", ""),
@@ -810,7 +810,7 @@ def generate_all_article_pages():
     validated_articles = validate_article_folders(article_folders)
 
     for folder, article_data in validated_articles:
-        output_path = os.path.join(CONFIG["generated_output_path"], folder, "index.html")
+        output_path = os.path.join(CONFIG["generated_articles_output_path"], folder, "index.html")
         generate_article_page(folder, article_data, output_path)
 
 
@@ -823,16 +823,16 @@ def generate_article_list_page():
     article_list_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("article_list_styling_and_scripts"))
     article_list_item_template = read_file(CONFIG["components_template_paths"].get("article_list_item"))
 
-    output_path = os.path.join(CONFIG["generated_output_path"], "index.html")
+    output_path = os.path.join(CONFIG["generated_articles_output_path"], "index.html")
 
-    article_list_items_html = ""
+    article_list_items_html = "<div class=\"artipress-articles-container \">\n"
 
     # For each article, render an article list item using `article_list_item_template` and the article's data
     for folder, article_data in validated_articles:
 
         article_labels = ""
         for label in article_data.get("article_labels", []):
-            article_labels += f"<span class=\"article-card-label\">{label}</span>"
+            article_labels += f"<span class=\"artipress-article-card-label\">{label}</span>"
 
         article_authors = ""
         for author_slug in article_data["author_slugs"]:
@@ -840,10 +840,10 @@ def generate_article_list_page():
             # If multiple authors, separate with comma and space
             if article_authors != "":
                 article_authors += ", "
-            article_authors += f"<a href='{CONFIG['base_url']}/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
+            article_authors += author_info.get('author_name', 'Unknown Author')
             
 
-        article_list_items_html += render_template(article_list_item_template, {
+        article_list_items_html += ( "\n" + render_template(article_list_item_template, {
             "article_title": article_data.get("article_title", "Untitled Article"),
             "article_strap_line": article_data.get("article_strap_line", ""),
             "article_labels": article_labels,
@@ -851,8 +851,10 @@ def generate_article_list_page():
             "article_published_date": f'<time class="localised-date" datetime="{article_data.get("date", {}).get("published", "")}">{article_data.get("date", {}).get("published", "")}</time>',
             "article_image_url": article_data.get("article_image_url", ""),
             "article_image_alt": article_data.get("article_image_alt", ""),
-            "article_url": f"{CONFIG['base_url']}/{folder}/index.html",
-        })
+            "article_url": f"/{CONFIG['generated_articles_output_path']}/{folder}/index.html",
+        }))
+    
+    article_list_items_html += "\n</div>"
 
     # Render the article list template with the generated article list items
     final_html = render_template(article_list_template, {
@@ -874,11 +876,11 @@ def main():
 
     # 1. Go through each article folder in `input_articles_folder` and validate that it contains an `JSON_ARTICLE_FILEPATH` file with the required fields. If any article folder is missing the `JSON_ARTICLE_FILEPATH` file or if the JSON is invalid or missing required fields, raise an error with a descriptive message indicating which article folder is invalid and what the issue is, stopping the generation process until all issues are resolved.
 
-    #2. For each valid article, generate an article page using the `base_template_paths.article_page` template and populate it with the article's data from `JSON_ARTICLE_FILEPATH` and the author's data from `artipress_data/authors/authors.json`. Save the generated article pages to the `generated_output_path` directory, maintaining a clear structure (e.g., `generated_output_path/{article_slug}/index.html`).
+    #2. For each valid article, generate an article page using the `base_template_paths.article_page` template and populate it with the article's data from `JSON_ARTICLE_FILEPATH` and the author's data from `artipress_data/authors/authors.json`. Save the generated article pages to the `generated_articles_output_path` directory, maintaining a clear structure (e.g., `generated_articles_output_path/{article_slug}/index.html`).
 
-    #3. Once all article pages are generated, create an article list page using the `base_template_paths.article_list` template. This page should list all articles with their title, strap line, and other data, and a link to their respective article page. Save this generated page to the `generated_output_path` directory (e.g., `generated_output_path/index.html`).
+    #3. Once all article pages are generated, create an article list page using the `base_template_paths.article_list` template. This page should list all articles with their title, strap line, and other data, and a link to their respective article page. Save this generated page to the `generated_articles_output_path` directory (e.g., `generated_articles_output_path/index.html`).
 
-    #4. For each author in `artipress_data/authors/authors.json`, generate an author page using the `base_template_paths.author_page` template and populate it with the author's data and a list of their articles. Save the generated author pages to the `generated_output_path` directory, maintaining a clear structure (e.g., `generated_output_path/authors/{author_slug}/index.html`).
+    #4. For each author in `artipress_data/authors/authors.json`, generate an author page using the `base_template_paths.author_page` template and populate it with the author's data and a list of their articles. Save the generated author pages to the `generated_articles_output_path` directory, maintaining a clear structure (e.g., `generated_articles_output_path/authors/{author_slug}/index.html`).
 
     #5. Once all author pages are generated, update the article list page to include links to the author pages where the author's name, avatar, and other data is displayed.
 
