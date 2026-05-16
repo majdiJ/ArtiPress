@@ -10,7 +10,8 @@
     "base_template_paths": {
         "article_list": "artipress_data/templates/article_list.html",
         "article_page": "artipress_data/templates/article_page.html",
-        "author_page": "artipress_data/templates/author_page.html"
+        "author_page": "artipress_data/templates/author_page.html",
+        "author_list": "artipress_data/templates/author_list.html"
     },
     "components_template_paths": {
         "article_page_head_metadata": "artipress_data/templates/components/article_page_head_metadata.html",
@@ -18,7 +19,11 @@
         "article_page_head_application_json_ld": "artipress_data/templates/components/article_page_head_application_json_ld.html",
         "article_page_main_article": "artipress_data/templates/components/article_page_main_article.html",
         "article_list_styling_and_scripts": "artipress_data/templates/components/article_list_styling_and_scripts.html",
-        "article_list_item": "artipress_data/templates/components/article_list_item.html"
+        "article_list_item": "artipress_data/templates/components/article_list_item.html",
+        "author_list_styling_and_scripts": "artipress_data/templates/components/author_list_styling_and_scripts.html",
+        "author_list_item": "artipress_data/templates/components/author_list_item.html",
+        "author_page_styling_and_scripts": "artipress_data/templates/components/author_page_styling_and_scripts.html",
+        "author_social_link": "artipress_data/templates/components/author_social_link.html"
     },
     "input_articles_folder": "artipress_data/articles",
     "generated_articles_output_path": "articles"

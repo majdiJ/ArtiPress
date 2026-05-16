@@ -15,6 +15,7 @@ REQUIRED_JSON_CONFIG_FIELDS = [
     "base_template_paths.article_list",
     "base_template_paths.article_page",
     "base_template_paths.author_page",
+    "base_template_paths.author_list",
     "input_articles_folder",
     "generated_articles_output_path",
 ]
@@ -29,6 +30,8 @@ REQUIRED_JSON_ARTICLE_FIELDS = [
 ]
 
 AUTHOR_JSON_PATH = "artipress_data/authors/authors.json"
+SOCIAL_LINKS_JSON_PATH = "artipress_data/authors/social_links.json"
+DEFAULT_AUTHOR_PICTURE_URL = "/artipress_data/authors/author_pictures/default.svg"
 
 RESERVED_FOLDERS_IN_ARTICLES_OUTPUT = [
     "authors",
@@ -134,9 +137,9 @@ def make_author_og_meta_tag(article_data: dict) -> str:
     for author_slug in article_data["author_slugs"]:
         author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
         if og_meta_tags == "":
-            og_meta_tags += f"<meta property=\"article:author\" content=\"{CONFIG['base_url']}/authors/{author_slug}\" />"
+            og_meta_tags += f"<meta property=\"article:author\" content=\"{CONFIG['base_url']}/articles/authors/{author_slug}\" />"
         else:
-            og_meta_tags += f"\n<meta property=\"article:author\" content=\"{CONFIG['base_url']}/authors/{author_slug}\" />"
+            og_meta_tags += f"\n<meta property=\"article:author\" content=\"{CONFIG['base_url']}/articles/authors/{author_slug}\" />"
 
     return og_meta_tags
 
@@ -148,7 +151,7 @@ def make_author_ld_json(article_data: dict) -> str:
         author_ld_json = {
             "@type": "Person",
             "name": author_info.get("author_name", "Unknown Author"),
-            "url": f"{CONFIG['base_url']}/authors/{author_slug}"
+            "url": f"{CONFIG['base_url']}/articles/authors/{author_slug}"
         }
         authors_ld_json.append(author_ld_json)
 
@@ -161,9 +164,9 @@ def make_author_html_element(article_data: dict) -> str:
         author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
 
         if html_authors_info == "":
-            html_authors_info += f"<a href='{CONFIG['base_url']}/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
+            html_authors_info += f"<a href='{CONFIG['base_url']}/articles/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
         else:
-            html_authors_info += f", <a href='{CONFIG['base_url']}/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
+            html_authors_info += f", <a href='{CONFIG['base_url']}/articles/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
     
     return html_authors_info
 
@@ -813,6 +816,44 @@ def generate_all_article_pages():
         output_path = os.path.join(CONFIG["generated_articles_output_path"], folder, "index.html")
         generate_article_page(folder, article_data, output_path)
 
+def render_article_list_items_html(validated_articles, article_list_item_template):
+    """
+    Render the grid of article cards used on both the article list page and individual author pages.
+
+    Args:
+        validated_articles: list of (folder, article_data) tuples.
+        article_list_item_template: raw template string for a single card.
+    Returns:
+        HTML string wrapping the cards in an .artipress-articles-container div.
+    """
+    article_list_items_html = "<div class=\"artipress-articles-container\">\n"
+
+    for folder, article_data in validated_articles:
+
+        article_labels = ""
+        for label in article_data.get("article_labels", []):
+            article_labels += f"<span class=\"artipress-article-card-label\">{label}</span>"
+
+        article_authors = ""
+        for author_slug in article_data["author_slugs"]:
+            author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
+            if article_authors != "":
+                article_authors += ", "
+            article_authors += author_info.get('author_name', 'Unknown Author')
+
+        article_list_items_html += ("\n" + render_template(article_list_item_template, {
+            "article_title": article_data.get("article_title", "Untitled Article"),
+            "article_strap_line": article_data.get("article_strap_line", ""),
+            "article_labels": article_labels,
+            "article_authors": article_authors,
+            "article_published_date": f'<time class="localised-date" datetime="{article_data.get("date", {}).get("published", "")}">{article_data.get("date", {}).get("published", "")}</time>',
+            "article_image_url": article_data.get("article_image_url", ""),
+            "article_image_alt": article_data.get("article_image_alt", ""),
+            "article_url": f"/{CONFIG['generated_articles_output_path']}/{folder}/index.html",
+        }))
+
+    article_list_items_html += "\n</div>"
+    return article_list_items_html
 
 def generate_article_list_page():
 
@@ -825,45 +866,174 @@ def generate_article_list_page():
 
     output_path = os.path.join(CONFIG["generated_articles_output_path"], "index.html")
 
-    article_list_items_html = "<div class=\"artipress-articles-container \">\n"
+    article_list_items_html = render_article_list_items_html(validated_articles, article_list_item_template)
 
-    # For each article, render an article list item using `article_list_item_template` and the article's data
-    for folder, article_data in validated_articles:
-
-        article_labels = ""
-        for label in article_data.get("article_labels", []):
-            article_labels += f"<span class=\"artipress-article-card-label\">{label}</span>"
-
-        article_authors = ""
-        for author_slug in article_data["author_slugs"]:
-            author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
-            # If multiple authors, separate with comma and space
-            if article_authors != "":
-                article_authors += ", "
-            article_authors += author_info.get('author_name', 'Unknown Author')
-            
-
-        article_list_items_html += ( "\n" + render_template(article_list_item_template, {
-            "article_title": article_data.get("article_title", "Untitled Article"),
-            "article_strap_line": article_data.get("article_strap_line", ""),
-            "article_labels": article_labels,
-            "article_authors": article_authors,
-            "article_published_date": f'<time class="localised-date" datetime="{article_data.get("date", {}).get("published", "")}">{article_data.get("date", {}).get("published", "")}</time>',
-            "article_image_url": article_data.get("article_image_url", ""),
-            "article_image_alt": article_data.get("article_image_alt", ""),
-            "article_url": f"/{CONFIG['generated_articles_output_path']}/{folder}/index.html",
-        }))
-    
-    article_list_items_html += "\n</div>"
-
-    # Render the article list template with the generated article list items
     final_html = render_template(article_list_template, {
         "article_list_styling_and_scripts": article_list_styling_and_scripts,
         "article_list_items": article_list_items_html,
     })
 
+    write_file(output_path, final_html)
+
+def generate_author_list_page():
+
+    with open(AUTHOR_JSON_PATH, "r", encoding="utf-8") as f:
+        authors = json.load(f)
+
+    author_list_template = read_file(CONFIG["base_template_paths"].get("author_list"))
+    author_list_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("author_list_styling_and_scripts"))
+    author_list_item_template = read_file(CONFIG["components_template_paths"].get("author_list_item"))
+
+    output_path = os.path.join(CONFIG["generated_articles_output_path"], "authors", "index.html")
+
+    author_list_items_html = "<div class=\"artipress-authors-container\">\n"
+
+    # For each author, render an author list item using `author_list_item_template` and the author's data
+    for author in authors:
+        author_slug = author.get("author_slug", "")
+
+        # Skip the role element entirely when the author has no role set
+        author_role = (author.get("author_role") or "").strip()
+        author_role_formatted = (
+            f'<p class="artipress-author-card-role">{author_role}</p>'
+            if author_role else ""
+        )
+
+        # Fall back to the default avatar when an author has no picture
+        author_picture_url = (author.get("author_picture_url") or "").strip() or DEFAULT_AUTHOR_PICTURE_URL
+
+        author_list_items_html += ("\n" + render_template(author_list_item_template, {
+            "author_name": author.get("author_name", "Unknown Author"),
+            "author_role_formatted": author_role_formatted,
+            "author_picture_url": author_picture_url,
+            "author_url": f"/{CONFIG['generated_articles_output_path']}/authors/{author_slug}/index.html",
+        }))
+
+    author_list_items_html += "\n</div>"
+
+    # Render the author list template with the generated author list items
+    final_html = render_template(author_list_template, {
+        "author_list_styling_and_scripts": author_list_styling_and_scripts,
+        "author_list_items": author_list_items_html,
+    })
+
     # Save the rendered template to the output path
     write_file(output_path, final_html)
+
+def render_author_social_links_html(social_links, social_link_template, social_links_registry):
+    """
+    Render a <ul> of social link icons for an author. Returns "" if the author has no usable links.
+    Skips + warns when a platform is missing from the registry or its icon file is missing.
+    """
+    if not social_links:
+        return ""
+
+    items_html = ""
+    for platform_key, data in social_links.items():
+        if platform_key not in social_links_registry:
+            print(f"Warning: social platform '{platform_key}' not found in social_links.json — skipping")
+            continue
+
+        registry_entry = social_links_registry[platform_key]
+        icon_path = registry_entry.get("icon", "")
+        local_icon_path = icon_path.lstrip("/")
+        if not icon_path or not os.path.exists(local_icon_path):
+            print(f"Warning: icon file '{local_icon_path}' missing for platform '{platform_key}' — skipping")
+            continue
+
+        platform_name = registry_entry.get("name", platform_key)
+        handle = (data.get("handle") or "").strip()
+        link = (data.get("link") or "").strip()
+        if not link:
+            continue
+
+        aria_label = f"{platform_name}: {handle}" if handle else platform_name
+
+        items_html += "\n" + render_template(social_link_template, {
+            "social_link_url": link,
+            "social_link_icon_url": icon_path,
+            "social_link_aria_label": aria_label,
+            "social_link_title": aria_label,
+        })
+
+    if not items_html:
+        return ""
+
+    return f'<ul class="social-links">{items_html}\n</ul>'
+
+def generate_author_page(author_data, validated_articles):
+    author_slug = author_data.get("author_slug", "")
+    author_name = author_data.get("author_name", "Unknown Author")
+
+    author_page_template = read_file(CONFIG["base_template_paths"].get("author_page"))
+    author_page_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("author_page_styling_and_scripts"))
+    article_list_item_template = read_file(CONFIG["components_template_paths"].get("article_list_item"))
+    social_link_template = read_file(CONFIG["components_template_paths"].get("author_social_link"))
+
+    with open(SOCIAL_LINKS_JSON_PATH, "r", encoding="utf-8") as f:
+        social_links_registry = json.load(f)
+
+    # Filter to articles this author wrote or co-wrote
+    author_articles = [
+        (folder, article_data) for folder, article_data in validated_articles
+        if author_slug in article_data.get("author_slugs", [])
+    ]
+
+    if author_articles:
+        author_articles_list_items = render_article_list_items_html(author_articles, article_list_item_template)
+    else:
+        author_articles_list_items = "<p>No articles yet.</p>"
+
+    # Role -- omit the <p> entirely when empty
+    author_role = (author_data.get("author_role") or "").strip()
+    author_role_formatted = (
+        f'<p class="author-role">{author_role}</p>'
+        if author_role else ""
+    )
+
+    # Bio -- raw kept for meta description, markdown rendered for the page body
+    author_bio = author_data.get("author_bio", "")
+    author_bio_html = markdown_to_html(author_bio) if author_bio else ""
+
+    # Picture -- fall back to default if missing
+    author_picture_url = (author_data.get("author_picture_url") or "").strip() or DEFAULT_AUTHOR_PICTURE_URL
+
+    # Social links -- empty string if author has none / all skipped
+    author_social_links_formatted = render_author_social_links_html(
+        author_data.get("social_links", {}),
+        social_link_template,
+        social_links_registry,
+    )
+
+    replacement_vars = {
+        "website_title": CONFIG["website_title"],
+        "base_url": CONFIG["base_url"],
+        "author_name": author_name,
+        "author_slug": author_slug,
+        "author_bio": author_bio,
+        "author_picture_url": author_picture_url,
+        "author_page_styling_and_scripts": author_page_styling_and_scripts,
+        "author_role_formatted": author_role_formatted,
+        "author_bio_html": author_bio_html,
+        "author_social_links_formatted": author_social_links_formatted,
+        "author_articles_list_items": author_articles_list_items,
+    }
+
+    final_html = render_template(author_page_template, replacement_vars)
+
+    output_path = os.path.join(CONFIG["generated_articles_output_path"], "authors", author_slug, "index.html")
+    write_file(output_path, final_html)
+
+def generate_all_author_pages():
+    with open(AUTHOR_JSON_PATH, "r", encoding="utf-8") as f:
+        authors = json.load(f)
+
+    article_folders = get_folders(CONFIG["input_articles_folder"])
+    validated_articles = validate_article_folders(article_folders)
+
+    for author in authors:
+        generate_author_page(author, validated_articles)
+        print(f"Generated author page: {author.get('author_name', 'Unknown Author')}")
 
 def main():
     # Verify that `artipress_data/artipress.config.json` exists and is valid JSON. 
@@ -886,6 +1056,8 @@ def main():
 
     generate_all_article_pages()
     generate_article_list_page()
+    generate_author_list_page()
+    generate_all_author_pages()
 
 
 
