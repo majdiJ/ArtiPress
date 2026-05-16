@@ -3,7 +3,7 @@
         "author_name": "John Doe",
         "author_slug": "john-doe",
         "author_bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "author_avatar_url": "https://artipress.majdij.com/resource/image/authors/john_doe_avatar.png",
+        "author_picture_url": "https://artipress.majdij.com/resource/image/authors/john_doe_avatar.png",
         "author_role": "Senior Writer",
         "social_links": {
             "twitter": "https://twitter.com/john_doe",

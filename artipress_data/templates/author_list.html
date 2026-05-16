@@ -1,3 +1,20 @@
+<!--
+This is an example author list template.
+You can use this as a base and modify it, or take the variables and sections and paste them into your own template.
+If you do bring/create your own, make sure to update the template path in the config file to point to your new template.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your author list template are:
+- `author_list_styling_and_scripts` -> This variable contains the styling (CSS) and any needed script(s) (JS) for the author list part. You can edit these.
+- `author_list_items` -> This variable contains the actual list of authors in HTML format. You must include this variable where you want the list of authors to be rendered.
+
+These variables must be put in {html_var(...)} format.
+
+You can edit the `author_list_cards.css` styling to fit your site.
+You can edit the author cards layout in the `author_list_item.html` template component.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,47 +25,24 @@
     <meta name="robots" content="index, follow">
 
     <!-- Site specific meta tags -->
-    <title>Authors - {html_var(website_title)}</title>
-    <link rel="canonical" href="{html_var(base_url)}/articles/authors" />
-    <meta name="description"
-        content="List of authors who have contributed articles to {html_var(website_title)}. Explore the profiles and works of our talented writers." />
-    <meta name="keywords"
-        content="authors, writers, contributors, {html_var(website_title)}, article authors" />
-
-    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
-    <meta property="og:title" content="Authors | {html_var(website_title)}">
-    <meta property="og:description"
-        content="List of authors who have contributed articles to {html_var(website_title)}. Explore the profiles and works of our talented writers.">
-    <meta property="og:image" content="{html_var(social_sharing_image_url)}">
-    <meta property="og:url" content="{html_var(base_url)}/articles/authors">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Authors | {html_var(website_title)}">
-    <meta name="twitter:description"
-        content="List of authors who have contributed articles to {html_var(website_title)}. Explore the profiles and works of our talented writers.">
-    <meta name="twitter:image" content="{html_var(social_sharing_image_url)}">
-
-    <!-- Icon(s) and browser styling -->
-    <link rel="icon" href="{html_var(website_favicon)}" />
-    <link rel="apple-touch-icon" href="{html_var(apple_touch_icon)}" />
-    <meta name="theme-color" content="{html_var(theme_color)}" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="{html_var(apple_status_bar_style)}">
+    <title>Authors - ArtiPress</title>
+    <link rel="canonical" href="artipress.majdij.com/articles/authors" />
+    <meta name="description" content="Static site article generator generator and builder without a backened database." />
 
     <!-- Style(s) -->
     <link rel="stylesheet" href="/artipress_data/style/main.css" />
-    <link rel="stylesheet" href="/artipress_data/style/author_list_base.css" />
-    <link rel="stylesheet" href="{html_var(custom_style)}" />
 
-    <!-- Script(s) -->
-    <script src="/artipress_data/scripts/anchor_scroll.js" defer></script>
+    <!-- === ArtiPress ===
+    You must include variable/section below in your author list template (In the <head> section) -->
+    {html_var(author_list_styling_and_scripts)}
+    <!-- END ArtiPress (End of needed section)-->
+
 </head>
 
 <body>
 
     <header class="articles-page-header">
-        <h1><a href="/">{html_var(website_title)}</a></h1>
+        <h1><a href="/">ArtiPress</a></h1>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -59,35 +53,22 @@
     </header>
 
     <main class="articles-list-page-main">
-        <div class="artipress-authors-list-page-content">
 
-            <div class="page-section page-section-projects" id="projects-header">
-                <h2>Authors</h2>
-            </div>
-
-            <div class="container-authors-list-grid">
-
-                <!-- Sort by name (A-Z) -->
-                
-                <div class="author-card">
-                    <a href="{html_var(base_url)}/articles/author/sample-article-1">
-                        <img src="{html_var(author_avatar_url)}" alt="{html_var(author_name)}'s avatar" class="author-card-avatar">
-                        <div class="text-content">
-                            <h3 class="author-card-name">{html_var(author_name)}</h3>
-                            <p class="author-card-role">{html_var(author_role)}</p>
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-
+        <div class="page-section page-section-projects" id="projects-header">
+            <h2>Authors</h2>
         </div>
+
+        <!-- === ArtiPress ===
+        You must include variable/section below in your author list template (In the <body> section, where you want the list of authors to be rendered) -->
+        {html_var(author_list_items)}
+        <!-- END ArtiPress (End of needed section)-->
+
     </main>
 
     <footer>
         <div class="container-page-content-width">
             <p>
-                &copy; 2026 {html_var(website_title)}.
+                &copy; 2026 ArtiPress. All rights reserved.
             </p>
         </div>
     </footer>

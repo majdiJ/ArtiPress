@@ -19,7 +19,7 @@
     <meta property="og:title" content="{html_var(author_name)} | {html_var(website_title)}">
     <meta property="og:description"
         content="{html_var(author_bio)}">
-    <meta property="og:image" content="{html_var(author_avatar_url)}">
+    <meta property="og:image" content="{html_var(author_picture_url)}">
     <meta property="og:url" content="{html_var(base_url)}/articles/authors/{html_var(author_slug)}">
     <meta property="og:type" content="profile">
 
@@ -28,7 +28,7 @@
     <meta name="twitter:title" content="{html_var(author_name)} | {html_var(website_title)}">
     <meta name="twitter:description"
         content="{html_var(author_bio)}">
-    <meta name="twitter:image" content="{html_var(author_avatar_url)}">
+    <meta name="twitter:image" content="{html_var(author_picture_url)}">
 
     <!-- Icon(s) and browser styling -->
     <link rel="icon" href="{html_var(website_favicon)}" />
@@ -39,7 +39,6 @@
     <!-- Style(s) -->
     <link rel="stylesheet" href="/artipress_data/style/main.css" />
     <link rel="stylesheet" href="/artipress_data/style/author_page_base.css" />
-    <link rel="stylesheet" href="/artipress_data/style/article_list_base.css" />
     <link rel="stylesheet" href="{html_var(custom_style)}" />
 
     <!-- Script(s) -->
@@ -64,7 +63,7 @@
 
         <div class="author-profile">
             <div class="author-avatar-container">
-                <img src="{html_var(author_avatar_url)}" alt="{html_var(author_name)}'s avatar" class="author-avatar">
+                <img src="{html_var(author_picture_url)}" alt="{html_var(author_name)}'s avatar" class="author-avatar">
             </div>
 
             <div class="author-info">
