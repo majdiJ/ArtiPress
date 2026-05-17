@@ -871,6 +871,7 @@ def generate_article_list_page():
     final_html = render_template(article_list_template, {
         "article_list_styling_and_scripts": article_list_styling_and_scripts,
         "article_list_items": article_list_items_html,
+        "base_url": CONFIG["base_url"],
     })
 
     write_file(output_path, final_html)
@@ -915,6 +916,7 @@ def generate_author_list_page():
     final_html = render_template(author_list_template, {
         "author_list_styling_and_scripts": author_list_styling_and_scripts,
         "author_list_items": author_list_items_html,
+        "base_url": CONFIG["base_url"],
     })
 
     # Save the rendered template to the output path

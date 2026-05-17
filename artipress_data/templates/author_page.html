@@ -37,7 +37,7 @@ You can edit the social link layout in the `author_social_link.html` template co
     <!-- Open Graph (Facebook, LinkedIn, etc.) -->
     <meta property="og:title" content="{html_var(author_name)} | {html_var(website_title)}">
     <meta property="og:description" content="{html_var(author_bio)}">
-    <meta property="og:image" content="{html_var(author_picture_url)}">
+    <meta property="og:image" content="{html_var(base_url)}{html_var(author_picture_url)}">
     <meta property="og:url" content="{html_var(base_url)}/articles/authors/{html_var(author_slug)}">
     <meta property="og:type" content="profile">
 
@@ -45,7 +45,7 @@ You can edit the social link layout in the `author_social_link.html` template co
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{html_var(author_name)} | {html_var(website_title)}">
     <meta name="twitter:description" content="{html_var(author_bio)}">
-    <meta name="twitter:image" content="{html_var(author_picture_url)}">
+    <meta name="twitter:image" content="{html_var(base_url)}{html_var(author_picture_url)}">
 
     <!-- Style(s) -->
     <link rel="stylesheet" href="/artipress_data/style/main.css" />
