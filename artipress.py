@@ -39,6 +39,8 @@ RESERVED_FOLDERS_IN_ARTICLES_OUTPUT = [
 
 
 CONFIG = {}
+AUTHORS = []
+SOCIAL_LINKS = {}
 
 def get_nested(data: dict, key: str):
     """
@@ -98,22 +100,17 @@ def get_folders(directory: str, ignore: list[str] = []) -> list[str]:
         if entry.is_dir() and entry.name not in ignore
     ]
 
-def get_author_info(author_slug: str, authors_json_path: str) -> dict:
+def get_author_info(author_slug: str, authors: list[dict]) -> dict:
     """
-    Retrieves author details from a JSON file by their slug.
+    Retrieves author details from a pre-loaded authors list by their slug.
 
     Args:
         author_slug: The unique slug identifier for the author (e.g. "john-doe").
-        authors_json_path: The file path to the authors JSON file.
+        authors:     Pre-loaded list of author dicts (from AUTHORS global).
 
     Returns:
         A dict containing the author's details, or an empty dict if not found.
     """
-    import json
-
-    with open(authors_json_path, "r", encoding="utf-8") as f:
-        authors = json.load(f)
-
     return next(
         (author for author in authors if author.get("author_slug") == author_slug),
         {}
@@ -123,7 +120,7 @@ def make_author_meta_tag(article_data: dict) -> str:
     # Get a list of the article's authors' details using `get_author_info` and the `author_slugs` field in `article_data`. Appened to structured meta tag.
     meta_tags = ""
     for author_slug in article_data["author_slugs"]:
-        author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
+        author_info = get_author_info(author_slug, AUTHORS)
         if meta_tags == "":
             meta_tags += f"<meta name=\"author\" content=\"{author_info.get('author_name', 'Unknown Author')}\" />"
         else:
@@ -135,7 +132,7 @@ def make_author_og_meta_tag(article_data: dict) -> str:
     # Get a list of the article's authors' details using `get_author_info` and the `author_slugs` field in `article_data`. Appened to structured Open Graph meta tag.
     og_meta_tags = ""
     for author_slug in article_data["author_slugs"]:
-        author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
+        author_info = get_author_info(author_slug, AUTHORS)
         if og_meta_tags == "":
             og_meta_tags += f"<meta property=\"article:author\" content=\"{CONFIG['base_url']}/articles/authors/{author_slug}\" />"
         else:
@@ -147,7 +144,7 @@ def make_author_ld_json(article_data: dict) -> str:
     # Get a list of the article's authors' details using `get_author_info` and the `author_slugs` field in `article_data`. Appened to structured application/ld+json script tag.
     authors_ld_json = []
     for author_slug in article_data["author_slugs"]:
-        author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
+        author_info = get_author_info(author_slug, AUTHORS)
         author_ld_json = {
             "@type": "Person",
             "name": author_info.get("author_name", "Unknown Author"),
@@ -161,7 +158,7 @@ def make_author_html_element(article_data: dict) -> str:
     # Get a list of the article's authors' details using `get_author_info` and the `author_slugs` field in `article_data`. Appened to structured html element.
     html_authors_info = ""
     for author_slug in article_data["author_slugs"]:
-        author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
+        author_info = get_author_info(author_slug, AUTHORS)
 
         if html_authors_info == "":
             html_authors_info += f"<a href='{CONFIG['base_url']}/articles/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
@@ -753,6 +750,42 @@ def validate_article_folders(article_folders):
 
     return validated_articles
 
+def startup_checks() -> list[tuple[str, dict]]:
+    global AUTHORS, SOCIAL_LINKS
+
+    # Verify all template file paths exist before any generation begins
+    all_template_paths = {
+        **CONFIG.get("base_template_paths", {}),
+        **CONFIG.get("components_template_paths", {}),
+    }
+    for key, path in all_template_paths.items():
+        if path is None or not os.path.exists(path):
+            raise SystemExit(f"Template file missing for '{key}': {path}")
+
+    # Load authors.json once
+    authors_data = validate_json(AUTHOR_JSON_PATH, [])
+    if not isinstance(authors_data, list):
+        raise ValueError(f"Expected a JSON array in {AUTHOR_JSON_PATH}, got {type(authors_data).__name__}")
+    AUTHORS = authors_data
+
+    # Load social_links.json once
+    social_data = validate_json(SOCIAL_LINKS_JSON_PATH, [])
+    if not isinstance(social_data, dict):
+        raise ValueError(f"Expected a JSON object in {SOCIAL_LINKS_JSON_PATH}, got {type(social_data).__name__}")
+    SOCIAL_LINKS = social_data
+
+    # Verify every article folder contains article.md
+    article_folders = get_folders(CONFIG["input_articles_folder"])
+    missing_md = [
+        folder for folder in article_folders
+        if not os.path.exists(os.path.join(CONFIG["input_articles_folder"], folder, "article.md"))
+    ]
+    if missing_md:
+        raise SystemExit(f"Missing article.md in folders: {missing_md}")
+
+    return validate_article_folders(article_folders)
+
+
 def generate_article_page(article_slug: str, article_data: dict, output_path: str):
 
     article_page_template = read_file(CONFIG["base_template_paths"].get("article_page"))
@@ -808,10 +841,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
 
     pass
 
-def generate_all_article_pages():
-    article_folders = get_folders(CONFIG["input_articles_folder"])
-    validated_articles = validate_article_folders(article_folders)
-
+def generate_all_article_pages(validated_articles: list[tuple[str, dict]]):
     for folder, article_data in validated_articles:
         output_path = os.path.join(CONFIG["generated_articles_output_path"], folder, "index.html")
         generate_article_page(folder, article_data, output_path)
@@ -836,7 +866,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
 
         article_authors = ""
         for author_slug in article_data["author_slugs"]:
-            author_info = get_author_info(author_slug, AUTHOR_JSON_PATH)
+            author_info = get_author_info(author_slug, AUTHORS)
             if article_authors != "":
                 article_authors += ", "
             article_authors += author_info.get('author_name', 'Unknown Author')
@@ -855,10 +885,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
     article_list_items_html += "\n</div>"
     return article_list_items_html
 
-def generate_article_list_page():
-
-    article_folders = get_folders(CONFIG["input_articles_folder"])
-    validated_articles = validate_article_folders(article_folders)
+def generate_article_list_page(validated_articles: list[tuple[str, dict]]):
 
     article_list_template = read_file(CONFIG["base_template_paths"].get("article_list"))
     article_list_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("article_list_styling_and_scripts"))
@@ -878,9 +905,6 @@ def generate_article_list_page():
 
 def generate_author_list_page():
 
-    with open(AUTHOR_JSON_PATH, "r", encoding="utf-8") as f:
-        authors = json.load(f)
-
     author_list_template = read_file(CONFIG["base_template_paths"].get("author_list"))
     author_list_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("author_list_styling_and_scripts"))
     author_list_item_template = read_file(CONFIG["components_template_paths"].get("author_list_item"))
@@ -890,7 +914,7 @@ def generate_author_list_page():
     author_list_items_html = "<div class=\"artipress-authors-container\">\n"
 
     # For each author, render an author list item using `author_list_item_template` and the author's data
-    for author in authors:
+    for author in AUTHORS:
         author_slug = author.get("author_slug", "")
 
         # Skip the role element entirely when the author has no role set
@@ -963,7 +987,7 @@ def render_author_social_links_html(social_links, social_link_template, social_l
 
     return f'<ul class="social-links">{items_html}\n</ul>'
 
-def generate_author_page(author_data, validated_articles):
+def generate_author_page(author_data: dict, validated_articles: list[tuple[str, dict]], social_links_registry: dict):
     author_slug = author_data.get("author_slug", "")
     author_name = author_data.get("author_name", "Unknown Author")
 
@@ -971,9 +995,6 @@ def generate_author_page(author_data, validated_articles):
     author_page_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("author_page_styling_and_scripts"))
     article_list_item_template = read_file(CONFIG["components_template_paths"].get("article_list_item"))
     social_link_template = read_file(CONFIG["components_template_paths"].get("author_social_link"))
-
-    with open(SOCIAL_LINKS_JSON_PATH, "r", encoding="utf-8") as f:
-        social_links_registry = json.load(f)
 
     # Filter to articles this author wrote or co-wrote
     author_articles = [
@@ -1026,40 +1047,23 @@ def generate_author_page(author_data, validated_articles):
     output_path = os.path.join(CONFIG["generated_articles_output_path"], "authors", author_slug, "index.html")
     write_file(output_path, final_html)
 
-def generate_all_author_pages():
-    with open(AUTHOR_JSON_PATH, "r", encoding="utf-8") as f:
-        authors = json.load(f)
-
-    article_folders = get_folders(CONFIG["input_articles_folder"])
-    validated_articles = validate_article_folders(article_folders)
-
-    for author in authors:
-        generate_author_page(author, validated_articles)
+def generate_all_author_pages(validated_articles: list[tuple[str, dict]]):
+    for author in AUTHORS:
+        generate_author_page(author, validated_articles, SOCIAL_LINKS)
         print(f"Generated author page: {author.get('author_name', 'Unknown Author')}")
 
 def main():
-    # Verify that `artipress_data/artipress.config.json` exists and is valid JSON. 
-    config_data = validate_json(JSON_CONFIG_FILEPATH, REQUIRED_JSON_CONFIG_FIELDS)
-    pass
+    global CONFIG, AUTHORS, SOCIAL_LINKS
 
-    # Merge defaults with loaded config and expose it globally
-    global CONFIG
+    config_data = validate_json(JSON_CONFIG_FILEPATH, REQUIRED_JSON_CONFIG_FIELDS)
     CONFIG = {**CONFIG_DEFAULTS, **config_data}
 
-    # 1. Go through each article folder in `input_articles_folder` and validate that it contains an `JSON_ARTICLE_FILEPATH` file with the required fields. If any article folder is missing the `JSON_ARTICLE_FILEPATH` file or if the JSON is invalid or missing required fields, raise an error with a descriptive message indicating which article folder is invalid and what the issue is, stopping the generation process until all issues are resolved.
+    validated_articles = startup_checks()
 
-    #2. For each valid article, generate an article page using the `base_template_paths.article_page` template and populate it with the article's data from `JSON_ARTICLE_FILEPATH` and the author's data from `artipress_data/authors/authors.json`. Save the generated article pages to the `generated_articles_output_path` directory, maintaining a clear structure (e.g., `generated_articles_output_path/{article_slug}/index.html`).
-
-    #3. Once all article pages are generated, create an article list page using the `base_template_paths.article_list` template. This page should list all articles with their title, strap line, and other data, and a link to their respective article page. Save this generated page to the `generated_articles_output_path` directory (e.g., `generated_articles_output_path/index.html`).
-
-    #4. For each author in `artipress_data/authors/authors.json`, generate an author page using the `base_template_paths.author_page` template and populate it with the author's data and a list of their articles. Save the generated author pages to the `generated_articles_output_path` directory, maintaining a clear structure (e.g., `generated_articles_output_path/authors/{author_slug}/index.html`).
-
-    #5. Once all author pages are generated, update the article list page to include links to the author pages where the author's name, avatar, and other data is displayed.
-
-    generate_all_article_pages()
-    generate_article_list_page()
+    generate_all_article_pages(validated_articles)
+    generate_article_list_page(validated_articles)
     generate_author_list_page()
-    generate_all_author_pages()
+    generate_all_author_pages(validated_articles)
 
 
 
