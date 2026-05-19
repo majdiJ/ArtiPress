@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Article Title</title>
+  <style>
+
+    /*  PAGE SETUP  */
+
+    @page {
+      size: A4;
+      margin: 20mm 18mm 25mm 18mm; /* top right bottom left */
+
+      @top-left {
+        content: "Article Title | example.com";
+        font-size: 8pt;
+        color: #888;
+      }
+
+      @bottom-left {
+        content: "https://example.com/articles/article-title" "\A" "Jane Smith | 19 May 2026";
+        white-space: pre;
+        font-size: 8pt;
+        color: #888;
+      }
+
+      @bottom-right {
+        content: "Page " counter(page) " of " counter(pages);
+        font-size: 8pt;
+        color: #888;
+      }
+    }
+
+    /* First page — no header or footer */
+    @page :first {
+      @top-left    { content: ""; }
+      @bottom-left { content: ""; }
+      @bottom-right { content: ""; }
+    }
+
+
+    /*  BASIC PRINT BEHAVIOUR  */
+
+    body {
+      font-size: 11pt;
+      line-height: 1.6;
+      orphans: 3;
+      widows: 3;
+    }
+
+    h1, h2, h3 {
+      page-break-after: avoid;  /* never leave a heading alone at a page bottom */
+    }
+
+    p {
+      page-break-inside: avoid;
+    }
+
+    figure, table, pre, blockquote {
+      page-break-inside: avoid;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Article Title</h1>
+  <p>By Jane Smith &mdash; 19 May 2026</p>
+
+  <h2>Introduction</h2>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
+  <p>
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+    qui officia deserunt mollit anim id est laborum.
+  </p>
+
+  <h2>Section One</h2>
+  <p>
+    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
+    turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit
+    amet, ante. Donec eu libero sit amet quam egestas semper.
+  </p>
+  <p>
+    Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est
+    et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo
+    vitae, ornare sit amet, wisi.
+  </p>
+
+  <h3>A Subsection</h3>
+  <p>
+    Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci,
+    sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis.
+    Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue.
+  </p>
+
+  <h2>Section Two</h2>
+  <p>
+    Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec,
+    imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan
+    a, consectetuer eget, posuere ut, mauris.
+  </p>
+  <p>
+    Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus.
+    Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis
+    vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat,
+    pede.
+  </p>
+
+  <h2>Conclusion</h2>
+  <p>
+    Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque
+    facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor,
+    tempus non, auctor et, hendrerit quis, nisi.
+  </p>
+  <p>
+    Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+    Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor.
+  </p>
+
+</body>
+</html>
