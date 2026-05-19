@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from datetime import datetime
 
 JSON_CONFIG_FILEPATH = "artipress_data/artipress.config.json"
 CONFIG_DEFAULTS = {
@@ -41,6 +42,18 @@ RESERVED_FOLDERS_IN_ARTICLES_OUTPUT = [
 CONFIG = {}
 AUTHORS = []
 SOCIAL_LINKS = {}
+
+def format_display_date(iso_string: str) -> str:
+    if not iso_string:
+        return ""
+    try:
+        dt = datetime.fromisoformat(iso_string.replace("Z", "+00:00"))
+        date_part = f"{dt.strftime('%B')} {dt.day}, {dt.year}"
+        if dt.hour == 0 and dt.minute == 0:
+            return date_part
+        return f"{date_part} at {dt.strftime('%H:%M')}"
+    except (ValueError, AttributeError):
+        return iso_string
 
 def get_nested(data: dict, key: str):
     """
@@ -801,14 +814,14 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
 
     # Construct published date
     ISO_published_date = article_data.get("date", {}).get("published", "")
-    published_date_element = f'<time class="localised-date" datetime="{ISO_published_date}">{ISO_published_date}</time>'
+    published_date_element = format_display_date(ISO_published_date)
 
     # Construct edited date (if it exists and has a value)
     ISO_edited_date = ""
     edited_date_element = ""
     if article_data.get("date", {}).get("edited") not in (None, ""):
         ISO_edited_date = article_data.get("date", {}).get("edited", "")
-        edited_date_element = f' | Edited on <time class="localised-date" datetime="{ISO_edited_date}">{ISO_edited_date}</time>'
+        edited_date_element = f' | Edited on {format_display_date(ISO_edited_date)}'
 
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
@@ -876,7 +889,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
             "article_strap_line": article_data.get("article_strap_line", ""),
             "article_labels": article_labels,
             "article_authors": article_authors,
-            "article_published_date": f'<time class="localised-date" datetime="{article_data.get("date", {}).get("published", "")}">{article_data.get("date", {}).get("published", "")}</time>',
+            "article_published_date": format_display_date(article_data.get("date", {}).get("published", "")),
             "article_image_url": article_data.get("article_image_url", ""),
             "article_image_alt": article_data.get("article_image_alt", ""),
             "article_url": f"/{CONFIG['generated_articles_output_path']}/{folder}/index.html",
