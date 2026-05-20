@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>An example article on Artipress | ArtiPress</title>
+
+    <style>
+        /*  PAGE SETUP  */
+
+        @page {
+            size: A4;
+            margin: 20mm 18mm 25mm 18mm;
+            /* top right bottom left */
+
+            @top-left {
+                content: "An example article on Artipress | ArtiPress (https://artipress.majdij.com)";
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/example-article-artipress" "\A" "John Doe | Published on May 14, 2026 | Edited on May 14, 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+        /* First page — no header or footer */
+        @page :first {
+            @top-left {
+                content: "";
+            }
+
+            @bottom-left {
+                content: "";
+            }
+
+            @bottom-right {
+                content: "";
+            }
+        }
+
+
+        /*  BASIC PRINT BEHAVIOUR  */
+
+        body {
+            font-size: 11pt;
+            line-height: 1.6;
+            orphans: 3;
+            widows: 3;
+        }
+
+        h1,
+        h2,
+        h3 {
+            page-break-after: avoid;
+            /* never leave a heading alone at a page bottom */
+        }
+
+        p {
+            page-break-inside: avoid;
+        }
+
+        figure,
+        table,
+        pre,
+        blockquote {
+            page-break-inside: avoid;
+        }
+    </style>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article list template (In the <head> section, in the middle) -->
+    <link rel="stylesheet" href="/artipress_data/style/article_md_elements.css" />
+<link rel="stylesheet" href="/artipress_data/style/article_main_element.css" />
+    <!-- END ArtiPress (End of needed section)-->
+</head>
+
+<body>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+    <article>
+    <header>
+        <h1>An example article on Artipress</h1>
+        <p class="strap-line">An examplar article to demonstrate the structure and generation of an article in Artipress.</p>
+        <p class="author-date">
+            By John Doe | Published on May 14, 2026 | Edited on May 14, 2026
+        </p>
+    </header>
+
+    <hr class="divider-line-horizontal-top">
+
+    <div class="article-sharing-exporting">
+        <ul>
+            <li>
+                <a href="https://twitter.com/intent/tweet?text=An example article on Artipress%0Ahttps://artipress.majdij.com/articles/example-article-artipress/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/x.png" alt="Twitter/x Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/example-article-artipress&quote=An example article on Artipress/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/facebook.webp" alt="Facebook Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/example-article-artipress/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/linkedin.png" alt="LinkedIn Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.threads.net/intent/post?text=An example article on Artipress%0Ahttps://artipress.majdij.com/articles/example-article-artipress/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/threads.png" alt="Threads Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/?text=https://artipress.majdij.com/articles/example-article-artipress/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/whatsapp.png" alt="WhatsApp Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/example-article-artipress/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
+                    <img src="/artipress_data/images/social-icons/link.svg" alt="Copy Link Icon" />
+                </a>
+            </li>
+            <li>
+                <a id="printNew">
+                    <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="divider-line-horizontal-bottom">
+
+    <div class="article-image-container article-content featured-article-image">
+        <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png"
+            alt="An example image for the article"/>
+    </div>
+
+    <div class="article-content">
+
+        <p>The following is an example article written in Markdown format, demonstrating various features such as headings, formatting, lists, code blocks, tables, images, links, and blockquotes. This article is structured to showcase the capabilities of Markdown for creating rich content.</p>
+<h2>Introduction</h2>
+<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <em>Ut enim ad minim veniam</em>, quis nostrud exercitation ullamco laboris.</p>
+<hr>
+<h2>Section Two: Typography</h2>
+<p>This paragraph uses <strong><em>bold and italic</em></strong> together. You can also use <del>strikethrough</del> for deleted content. Inline <code>code snippets</code> look like this.</p>
+<blockquote>
+<p>"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</p>
+<p>— <em>Cicero, probably</em></p>
+</blockquote>
+<hr>
+<h2>Section Three: Lists</h2>
+<h3>Unordered List</h3>
+<ul><li><p>Lorem ipsum dolor sit amet</p></li><li><p>Consectetur adipiscing elit</p>
+<ul><li>Sed do eiusmod tempor</li><li>Incididunt ut labore</li></ul></li><li><p>Ut enim ad minim veniam</p></li></ul>
+<h3>Ordered List</h3>
+<ol><li><p>First, lorem ipsum dolor sit amet</p></li><li><p>Second, consectetur adipiscing elit</p></li><li><p>Third, sed do eiusmod tempor incididunt</p></li><li><p>Fourth, ut labore et dolore magna aliqua</p></li></ol>
+<h3>Task List</h3>
+<ul><li><p><input type="checkbox" disabled checked> Lorem ipsum dolor sit amet</p></li><li><p><input type="checkbox" disabled checked> Consectetur adipiscing elit</p></li><li><p><input type="checkbox" disabled> Sed do eiusmod tempor incididunt</p></li><li><p><input type="checkbox" disabled> Ut enim ad minim veniam</p></li></ul>
+<hr>
+<h2>Section Four: Code</h2>
+<p>Inline code: <code>const lorem = "ipsum";</code></p>
+<pre><code class="language-javascript">// Lorem ipsum function
+function loremIpsum(words) {
+  const lorem = ["lorem", "ipsum", "dolor", "sit", "amet"];
+  return Array.from({ length: words }, (_, i) =&gt; lorem[i % lorem.length]).join(" ");
+}
+
+console.log(loremIpsum(5));</code></pre>
+<pre><code class="language-bash"># Run the lorem generator
+echo "Lorem ipsum dolor sit amet"</code></pre>
+<hr>
+<h2>Section Five: Table</h2>
+<table><thead><tr><th>Name</th><th>Role</th><th>Status</th><th>Score</th></tr></thead><tbody><tr><td>Lorem Ipsum</td><td>Developer</td><td>✅ Active</td><td>98</td></tr><tr><td>Dolor Sit</td><td>Designer</td><td>✅ Active</td><td>87</td></tr><tr><td>Amet Consec</td><td>Manager</td><td>⏸ Paused</td><td>74</td></tr><tr><td>Tur Adipisc</td><td>Analyst</td><td>❌ Inactive</td><td>61</td></tr></tbody></table>
+<hr>
+<h2>Section Six: Images</h2>
+<p><img src="https://picsum.photos/seed/lorem/800/400" alt="A serene placeholder landscape"></p>
+<p><em>Fig. 1 — Lorem ipsum landscape, circa nullam.</em></p>
+<hr>
+<h2>Section Seven: Links & Footnotes</h2>
+<p>Visit <a href="https://www.lipsum.com">Lorem Ipsum Generator</a> for more placeholder text. You can also reference <a href="https://en.wikipedia.org/wiki/Lorem_ipsum">Wikipedia's article on Lorem Ipsum</a>.</p>
+<hr>
+<h2>Section Eight: Nested Blockquotes</h2>
+<blockquote>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<blockquote>
+<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<blockquote>
+<p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<hr>
+<h2>Section Nine: Horizontal Rules & Closing</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<hr>
+<p><em>Fin. Lorem ipsum dolor sit amet.</em></p>
+        
+    </div>
+
+    <hr class="divider-line-horizontal">
+
+    <footer>
+        <p class="author-date">
+            By John Doe | Published on May 14, 2026 | Edited on May 14, 2026
+        </p>
+    </footer>
+</article>
+    <!-- END ArtiPress (End of needed section)-->
+
+</body>
+
+</html>

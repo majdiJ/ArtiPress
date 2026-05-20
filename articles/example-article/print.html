@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Even cooler article: an example article | ArtiPress</title>
+
+    <style>
+        /*  PAGE SETUP  */
+
+        @page {
+            size: A4;
+            margin: 20mm 18mm 25mm 18mm;
+            /* top right bottom left */
+
+            @top-left {
+                content: "Even cooler article: an example article | ArtiPress (https://artipress.majdij.com)";
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/example-article" "\A" "John Doe | Published on May 14, 2026 | Edited on May 14, 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+        /* First page — no header or footer */
+        @page :first {
+            @top-left {
+                content: "";
+            }
+
+            @bottom-left {
+                content: "";
+            }
+
+            @bottom-right {
+                content: "";
+            }
+        }
+
+
+        /*  BASIC PRINT BEHAVIOUR  */
+
+        body {
+            font-size: 11pt;
+            line-height: 1.6;
+            orphans: 3;
+            widows: 3;
+        }
+
+        h1,
+        h2,
+        h3 {
+            page-break-after: avoid;
+            /* never leave a heading alone at a page bottom */
+        }
+
+        p {
+            page-break-inside: avoid;
+        }
+
+        figure,
+        table,
+        pre,
+        blockquote {
+            page-break-inside: avoid;
+        }
+    </style>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article list template (In the <head> section, in the middle) -->
+    <link rel="stylesheet" href="/artipress_data/style/article_md_elements.css" />
+<link rel="stylesheet" href="/artipress_data/style/article_main_element.css" />
+    <!-- END ArtiPress (End of needed section)-->
+</head>
+
+<body>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+    <article>
+    <header>
+        <h1>Even cooler article: an example article</h1>
+        <p class="strap-line">Lorem ipsum dolor sit amet, consectetur adipisicing elit. An example article to demonstrate the structure</p>
+        <p class="author-date">
+            By John Doe | Published on May 14, 2026 | Edited on May 14, 2026
+        </p>
+    </header>
+
+    <hr class="divider-line-horizontal-top">
+
+    <div class="article-sharing-exporting">
+        <ul>
+            <li>
+                <a href="https://twitter.com/intent/tweet?text=Even cooler article: an example article%0Ahttps://artipress.majdij.com/articles/example-article/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/x.png" alt="Twitter/x Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/example-article&quote=Even cooler article: an example article/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/facebook.webp" alt="Facebook Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/example-article/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/linkedin.png" alt="LinkedIn Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.threads.net/intent/post?text=Even cooler article: an example article%0Ahttps://artipress.majdij.com/articles/example-article/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/threads.png" alt="Threads Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/?text=https://artipress.majdij.com/articles/example-article/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/artipress_data/images/social-icons/whatsapp.png" alt="WhatsApp Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/example-article/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
+                    <img src="/artipress_data/images/social-icons/link.svg" alt="Copy Link Icon" />
+                </a>
+            </li>
+            <li>
+                <a id="printNew">
+                    <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="divider-line-horizontal-bottom">
+
+    <div class="article-image-container article-content featured-article-image">
+        <img src="/artipress_data/articles/example-article/image1.png"
+            alt="An example image for the article"/>
+    </div>
+
+    <div class="article-content">
+
+        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+<h2>Example Article SubTitle!</h2>
+<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+<p><em>Bulleted List Example:</em></p>
+<ul><li><p>First item in the list</p></li><li><p>Second item in the list</p></li><li><p>Third item in the list</p></li></ul>
+<p>Link to homepage: <a href="/">Homepage</a></p>
+<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+<h3>Example Sub-SubTitle</h3>
+<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+<p>Insert Html button example:</p>
+<button onclick="alert('Button clicked!')">Click Me</button>
+<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+        
+    </div>
+
+    <hr class="divider-line-horizontal">
+
+    <footer>
+        <p class="author-date">
+            By John Doe | Published on May 14, 2026 | Edited on May 14, 2026
+        </p>
+    </footer>
+</article>
+    <!-- END ArtiPress (End of needed section)-->
+
+</body>
+
+</html>

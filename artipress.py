@@ -180,6 +180,13 @@ def make_author_html_element(article_data: dict) -> str:
     
     return html_authors_info
 
+def make_author_plain_text(article_data: dict) -> str:
+    names = []
+    for author_slug in article_data["author_slugs"]:
+        author_info = get_author_info(author_slug, AUTHORS)
+        names.append(author_info.get("author_name", "Unknown Author"))
+    return ", ".join(names)
+
 def read_file(path: str) -> str:
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -839,7 +846,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         "json_ld_authors": make_author_ld_json(article_data),
         "article_authors": make_author_html_element(article_data),
         "article_published_date": published_date_element,
-        "article_edited_date_iso": edited_date_element,
+        "article_edited_date": edited_date_element,
         "website_logo_url": CONFIG.get("website_logo_url", ""),
         "article_image_url": article_data.get("article_image_url", ""),
         "article_image_alt": article_data.get("article_image_alt", ""),
@@ -854,10 +861,56 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
 
     pass
 
+def generate_article_print(article_slug: str, article_data: dict, output_path: str):
+
+    article_print_template = read_file(CONFIG["base_template_paths"].get("article_print"))
+    article_md_content = read_file(os.path.join(CONFIG["input_articles_folder"], article_slug, "article.md"))
+
+    ISO_published_date = article_data.get("date", {}).get("published", "")
+
+    edited_date_text = ""
+    if article_data.get("date", {}).get("edited") not in (None, ""):
+        edited_date_text = f' | Edited on {format_display_date(article_data["date"]["edited"])}'
+
+    replacement_vars = {
+        "article_title": article_data.get("article_title", "Untitled Article"),
+        "website_title": CONFIG["website_title"],
+        "generated_articles_output_path": CONFIG["generated_articles_output_path"],
+        "base_url": CONFIG["base_url"],
+        "article_id": article_slug,
+        "article_strap_line": article_data.get("article_strap_line", ""),
+        "article_authors": make_author_plain_text(article_data),
+        "article_published_date": format_display_date(ISO_published_date),
+        "article_edited_date": edited_date_text,
+        "article_edited_date_iso": edited_date_text,
+        "article_image_url": article_data.get("article_image_url", ""),
+        "article_image_alt": article_data.get("article_image_alt", ""),
+        "article_html_content": markdown_to_html(article_md_content),
+    }
+
+    # Pass 1: inject component content and resolve top-level template variables
+    base_print_template = render_template(article_print_template, {
+        **replacement_vars,
+        "articles_page_styling_and_scripts": read_file(CONFIG["components_template_paths"].get("articles_page_styling_and_scripts")),
+        "article_page_main_article": read_file(CONFIG["components_template_paths"].get("article_page_main_article")),
+    })
+
+    # Pass 2: resolve variables inside injected component content
+    final_html = render_template(base_print_template, replacement_vars)
+
+    write_file(output_path, final_html)
+
+    pass
+
 def generate_all_article_pages(validated_articles: list[tuple[str, dict]]):
     for folder, article_data in validated_articles:
         output_path = os.path.join(CONFIG["generated_articles_output_path"], folder, "index.html")
         generate_article_page(folder, article_data, output_path)
+
+def generate_all_article_prints(validated_articles: list[tuple[str, dict]]):
+    for folder, article_data in validated_articles:
+        output_path = os.path.join(CONFIG["generated_articles_output_path"], folder, "print.html")
+        generate_article_print(folder, article_data, output_path)
 
 def render_article_list_items_html(validated_articles, article_list_item_template):
     """
@@ -1074,6 +1127,7 @@ def main():
     validated_articles = startup_checks()
 
     generate_all_article_pages(validated_articles)
+    generate_all_article_prints(validated_articles)
     generate_article_list_page(validated_articles)
     generate_author_list_page()
     generate_all_author_pages(validated_articles)

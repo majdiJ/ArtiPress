@@ -10,6 +10,7 @@
     "base_template_paths": {
         "article_list": "artipress_data/templates/article_list.html",
         "article_page": "artipress_data/templates/article_page.html",
+        "article_print": "artipress_data/templates/article_print.html",
         "author_page": "artipress_data/templates/author_page.html",
         "author_list": "artipress_data/templates/author_list.html"
     },
