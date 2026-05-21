@@ -174,9 +174,9 @@ def make_author_html_element(article_data: dict) -> str:
         author_info = get_author_info(author_slug, AUTHORS)
 
         if html_authors_info == "":
-            html_authors_info += f"<a href='{CONFIG['base_url']}/articles/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
+            html_authors_info += f"<a href='/articles/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
         else:
-            html_authors_info += f", <a href='{CONFIG['base_url']}/articles/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
+            html_authors_info += f", <a href='/articles/authors/{author_slug}'>{author_info.get('author_name', 'Unknown Author')}</a>"
     
     return html_authors_info
 
@@ -927,8 +927,18 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
     for folder, article_data in validated_articles:
 
         article_labels = ""
-        for label in article_data.get("article_labels", []):
-            article_labels += f"<span class=\"artipress-article-card-label\">{label}</span>"
+        #  Check to see if there are any labels for the article
+        if article_data.get("article_labels"):
+            article_labels += "<p class=\"artipress-article-card-labels\">"
+
+            for label in article_data.get("article_labels", []):
+                article_labels += f"<span class=\"artipress-article-card-label\">{label}</span>"
+            
+            article_labels += "</p>"
+        
+        else:
+            # If there are no labels, just place an epty div that will be used for spacing
+            article_labels = "<div class=\"artipress-article-card-labels-empty\"></div>"
 
         article_authors = ""
         for author_slug in article_data["author_slugs"]:
