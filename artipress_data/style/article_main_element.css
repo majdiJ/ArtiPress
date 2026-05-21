@@ -58,3 +58,11 @@ article .article-content img {
     margin: 0 auto;
     height: auto;
 }
+
+/* Change style for print  */
+@media print {
+    .article-sharing-exporting,
+    .divider-line-horizontal-bottom {
+        display: none;
+    }
+}

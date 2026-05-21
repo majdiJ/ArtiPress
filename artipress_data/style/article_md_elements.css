@@ -160,3 +160,11 @@
     max-width: 100%;
     height: auto;
 }
+
+/* Change style for print  */
+@media print {
+    .article-content p {
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+}

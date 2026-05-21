@@ -3,11 +3,10 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Even cooler article: an example article | ArtiPress</title>
+    <title>Even cooler article: an example article - ArtiPress</title>
 
     <style>
         /*  PAGE SETUP  */
-
         @page {
             size: A4;
             margin: 20mm 18mm 25mm 18mm;
@@ -35,16 +34,24 @@
 
         /* First page — no header or footer */
         @page :first {
+
+            margin: 15mm 18mm 25mm 18mm;
+
             @top-left {
                 content: "";
             }
 
             @bottom-left {
-                content: "";
+                content: "https://artipress.majdij.com/articles/example-article" "\A" "John Doe | Published on May 14, 2026 | Edited on May 14, 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
             }
 
             @bottom-right {
-                content: "";
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
             }
         }
 
@@ -66,7 +73,7 @@
         }
 
         p {
-            page-break-inside: avoid;
+            page-break-inside: auto;
         }
 
         figure,
