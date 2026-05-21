@@ -768,6 +768,14 @@ def validate_article_folders(article_folders):
         except (FileNotFoundError, ValueError, KeyError) as e:
             raise SystemExit(f"Error in article folder '{folder}': {e}")
 
+    # Order: most-recently-published first; ties broken alphabetically by title.
+    # Two passes leverage sort stability — the title order from pass 1 is preserved within each date group in pass 2.
+    validated_articles.sort(key=lambda item: (item[1].get("article_title") or "").lower())
+    validated_articles.sort(
+        key=lambda item: (item[1].get("date") or {}).get("published") or "",
+        reverse=True,
+    )
+
     return validated_articles
 
 def startup_checks() -> list[tuple[str, dict]]:
