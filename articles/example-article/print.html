@@ -75,6 +75,35 @@
         blockquote {
             page-break-inside: avoid;
         }
+
+
+        /*  SCREEN VIEW (non-print)  */
+
+        .print-screen-message {
+            display: none;
+        }
+
+        @media screen {
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: sans-serif;
+            }
+
+            .print-screen-message {
+                display: block;
+                text-align: center;
+                max-width: 32rem;
+                padding: 1rem;
+            }
+
+            .article-content {
+                display: none;
+            }
+        }
     </style>
 
     <!-- === ArtiPress ===
@@ -86,9 +115,22 @@
 
 <body>
 
+    <div class="print-screen-message">
+        <p>Print article: Even cooler article: an example article</p>
+        <p>Your browser should auto open the print dialogue to allow you to print the article.</p>
+        <p>If it doesn't auto open you can <a href="#" onclick="window.print(); return false;">click here to do it manually</a>.</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', function () {
+            window.print();
+        });
+    </script>
+
     <!-- === ArtiPress ===
     You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
-    <article>
+    <div class="article-content">
+        <article>
     <header>
         <h1>Even cooler article: an example article</h1>
         <p class="strap-line">Lorem ipsum dolor sit amet, consectetur adipisicing elit. An example article to demonstrate the structure</p>
@@ -132,7 +174,7 @@
                 </a>
             </li>
             <li>
-                <a id="printNew">
+                <a id="printNew" href="/articles/example-article/print.html">
                     <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
                 </a>
             </li>
@@ -171,6 +213,7 @@
         </p>
     </footer>
 </article>
+    </div>
     <!-- END ArtiPress (End of needed section)-->
 
 </body>
