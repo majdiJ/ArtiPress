@@ -72,16 +72,19 @@ You can edit the social link layout in the `author_social_link.html` template co
     <main class="author-page-main">
 
         <section class="author-profile">
-            <div class="author-avatar-container">
-                <img src="{html_var(author_picture_url)}" alt="{html_var(author_name)}" class="author-avatar">
+            <div class="author-profile-header">
+                <div class="author-avatar-container">
+                    <img src="{html_var(author_picture_url)}" alt="{html_var(author_name)}" class="author-avatar">
+                </div>
+
+                <div class="author-info">
+                    <h2 class="author-name">{html_var(author_name)}</h2>
+                    {html_var(author_role_formatted)}
+                </div>
             </div>
 
-            <div class="author-info">
-                <h2 class="author-name">{html_var(author_name)}</h2>
-                {html_var(author_role_formatted)}
-                <div class="author-bio">{html_var(author_bio_html)}</div>
-                {html_var(author_social_links_formatted)}
-            </div>
+            <div class="author-bio">{html_var(author_bio_html)}</div>
+            {html_var(author_social_links_formatted)}
         </section>
 
         <section class="author-articles">

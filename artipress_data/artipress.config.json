@@ -28,5 +28,7 @@
     },
     "input_articles_folder": "artipress_data/articles",
     "generated_articles_output_path": "articles",
-    "recently_published_within_hours": 168
+    "recently_published_within_hours": 168,
+    "date_format": "{day} %B %Y",
+    "time_format": "%H:%M"
 }

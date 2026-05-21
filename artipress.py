@@ -12,6 +12,8 @@ CONFIG_DEFAULTS = {
     "base_template_paths": {},
     "generated_articles_output_path": "articles",
     "recently_published_within_hours": 168,
+    "date_format": "{day} %B %Y",
+    "time_format": "%H:%M",
 }
 REQUIRED_JSON_CONFIG_FIELDS = [
     "base_template_paths.article_list",
@@ -49,10 +51,12 @@ def format_display_date(iso_string: str) -> str:
         return ""
     try:
         dt = datetime.fromisoformat(iso_string.replace("Z", "+00:00"))
-        date_part = f"{dt.strftime('%B')} {dt.day}, {dt.year}"
+        date_format = CONFIG.get("date_format", "{day} %B %Y")
+        time_format = CONFIG.get("time_format", "%H:%M")
+        date_part = dt.strftime(date_format.replace("{day}", str(dt.day)))
         if dt.hour == 0 and dt.minute == 0:
             return date_part
-        return f"{date_part} at {dt.strftime('%H:%M')}"
+        return f"{date_part} at {dt.strftime(time_format)}"
     except (ValueError, AttributeError):
         return iso_string
 
