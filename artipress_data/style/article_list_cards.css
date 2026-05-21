@@ -1,12 +1,13 @@
 /* CSS Variables */
 :root {
-    --artipress-article-card-width: 350px;
-    --gap-between-cards: 20px;
+    --artipress-article-card-width: 364px;
+    --gap-between-cards: 25px;
     --artipress-article-card-border-color: hsl(0, 0%, 75%);
+    --artipress-article-card-border-radius: 22px;
     --artipress-article-card-image-border-radius: 10px;
 
     --article-text-content-padding-top: 10px;
-    --article-text-content-padding-side: 0;
+    --article-text-content-padding-side: 5px;
     --article-text-content-padding-bottom: 7px;
 
     --article-title-color: black;
@@ -31,10 +32,11 @@
 }
 
 .artipress-article-card {
+    padding: 12px 12px 0;
     width: var(--artipress-article-card-width);
-    height: 100%;
-    /* background-color: hsl(0, 0%, 100%); */
+    height: fit-content;
     border: 1px solid transparent;
+    border-radius: var(--artipress-article-card-border-radius);
     display: flex;
     overflow: hidden;
     text-decoration: none;
@@ -42,10 +44,15 @@
     flex-direction: column;
 }
 
+.artipress-article-card:hover {
+    background-color: hsl(0, 0%, 95%);
+}
+
 .artipress-article-card img {
     height: 220px;
     width: 100%;
     object-fit: cover;
+    border: 1px solid var(--artipress-article-card-border-color);
     border-radius: var(--artipress-article-card-image-border-radius);
 }
 
