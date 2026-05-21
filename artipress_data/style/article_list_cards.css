@@ -51,7 +51,7 @@
 }
 
 .artipress-article-card img {
-    height: 220px;
+    height: 230px;
     width: 100%;
     object-fit: cover;
     border: 1px solid var(--artipress-article-card-border-color);

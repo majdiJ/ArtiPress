@@ -3,7 +3,7 @@
     --artipress-author-card-width: 320px;
     --gap-between-author-cards: 20px;
     --artipress-author-card-border-color: hsl(0, 0%, 75%);
-    --artipress-author-card-border-radius: 0px;
+    --artipress-author-card-border-radius: 16px;
 
     --artipress-author-card-padding: 15px;
     --artipress-author-card-inner-gap: 15px;
@@ -26,8 +26,7 @@
 
 .artipress-author-card {
     width: var(--artipress-author-card-width);
-    background-color: hsl(0, 0%, 100%);
-    border: 1px solid var(--artipress-author-card-border-color);
+    border: 1px solid transparent;
     border-radius: var(--artipress-author-card-border-radius);
     padding: var(--artipress-author-card-padding);
     box-sizing: border-box;
@@ -39,6 +38,10 @@
     color: black;
 }
 
+.artipress-author-card:hover {
+    background-color: hsl(0, 0%, 95%);
+}
+
 .artipress-author-card:hover .text-content .artipress-author-card-name {
     text-decoration: underline;
 }
@@ -46,6 +49,7 @@
 .artipress-author-card .artipress-author-card-avatar {
     width: var(--artipress-author-card-avatar-size);
     height: var(--artipress-author-card-avatar-size);
+    border: 1px solid var(--artipress-author-card-border-color);
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
