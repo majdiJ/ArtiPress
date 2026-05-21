@@ -27,5 +27,6 @@
         "author_social_link": "artipress_data/templates/components/author_social_link.html"
     },
     "input_articles_folder": "artipress_data/articles",
-    "generated_articles_output_path": "articles"
+    "generated_articles_output_path": "articles",
+    "recently_published_within_hours": 168
 }

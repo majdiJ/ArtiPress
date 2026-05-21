@@ -11,6 +11,7 @@ CONFIG_DEFAULTS = {
     "input_articles_folder": "artipress_data/articles",
     "base_template_paths": {},
     "generated_articles_output_path": "articles",
+    "recently_published_within_hours": 168,
 }
 REQUIRED_JSON_CONFIG_FIELDS = [
     "base_template_paths.article_list",
@@ -930,7 +931,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
     Returns:
         HTML string wrapping the cards in an .artipress-articles-container div.
     """
-    article_list_items_html = "<div class=\"artipress-articles-container\">\n"
+    article_list_items_html = f"<div class=\"artipress-articles-container\" data-recently-published-hours=\"{CONFIG.get('recently_published_within_hours', 0)}\">\n"
 
     for folder, article_data in validated_articles:
 
@@ -961,6 +962,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
             "article_labels": article_labels,
             "article_authors": article_authors,
             "article_published_date": format_display_date(article_data.get("date", {}).get("published", "")),
+            "article_published_date_iso": article_data.get("date", {}).get("published", ""),
             "article_image_url": article_data.get("article_image_url", ""),
             "article_image_alt": article_data.get("article_image_alt", ""),
             "article_url": f"/{CONFIG['generated_articles_output_path']}/{folder}/index.html",

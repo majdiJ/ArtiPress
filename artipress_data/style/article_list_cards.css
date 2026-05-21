@@ -22,6 +22,8 @@
     --article-author-date-color: hsl(0, 0%, 50%);
     --article-author-date-font-size: 0.85rem;
 
+    --recently-published-article-label-color: hsl(220, 100%, 50%);
+
 }
 
 .artipress-articles-container {
@@ -69,6 +71,11 @@
 .artipress-article-card .text-content .artipress-article-card-labels .artipress-article-card-label {
     font-size: var(--article-label-font-size);
     color: var(--article-label-color);
+}
+
+.artipress-article-card .text-content .artipress-article-card-labels .recently-published-article-label {
+    color: var(--recently-published-article-label-color);
+    font-weight: 600;
 }
 
 .artipress-article-card-labels-empty {

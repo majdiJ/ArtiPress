@@ -36,6 +36,7 @@ You can edit the article cards layout in the `article_item.html` template compon
     <!-- === ArtiPress ===
     You must include variable/section below in your article list template (In the <head> section) -->
     <link rel="stylesheet" href="/artipress_data/style/article_list_cards.css" />
+<script src="/artipress_data/scripts/recently_published_label.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 
 </head>
@@ -61,18 +62,18 @@ You can edit the article cards layout in the `article_item.html` template compon
 
         <!-- === ArtiPress ===
         You must include variable/section below in your article list template (In the <body> section, where you want the list of articles to be rendered) -->
-        <div class="artipress-articles-container">
+        <div class="artipress-articles-container" data-recently-published-hours="168">
 
-<a href="/articles/example-article-artipress/index.html" class="artipress-article-card">
+<a href="/articles/example-article-artipress/index.html" class="artipress-article-card" data-published="2026-05-21T00:00:00Z">
     <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="An example image for the article" class="article-card-thumbnail" />
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Example</span></p>
         <h3 class="artipress-article-card-title">An example article on Artipress</h3>
         <p class="artipress-article-card-description">An examplar article to demonstrate the structure and generation of an article in Artipress.</p>
-        <p class="artipress-article-card-author-and-date">John Doe | May 14, 2026</p>
+        <p class="artipress-article-card-author-and-date">John Doe | May 21, 2026</p>
     </div>
 </a>
-<a href="/articles/example-article/index.html" class="artipress-article-card">
+<a href="/articles/example-article/index.html" class="artipress-article-card" data-published="2026-05-14T00:00:00Z">
     <img src="/artipress_data/articles/example-article/image1.png" alt="An example image for the article" class="article-card-thumbnail" />
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Cooking</span></p>
@@ -81,7 +82,7 @@ You can edit the article cards layout in the `article_item.html` template compon
         <p class="artipress-article-card-author-and-date">John Doe | May 14, 2026</p>
     </div>
 </a>
-<a href="/articles/building-simple-pykv/index.html" class="artipress-article-card">
+<a href="/articles/building-simple-pykv/index.html" class="artipress-article-card" data-published="2025-12-22T00:00:00Z">
     <img src="/artipress_data/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="article-card-thumbnail" />
     <div class="text-content">
         <div class="artipress-article-card-labels-empty"></div>
@@ -90,7 +91,7 @@ You can edit the article cards layout in the `article_item.html` template compon
         <p class="artipress-article-card-author-and-date">Majdi Jaigirdar | December 22, 2025</p>
     </div>
 </a>
-<a href="/articles/developing-my-portfolio-website/index.html" class="artipress-article-card">
+<a href="/articles/developing-my-portfolio-website/index.html" class="artipress-article-card" data-published="2025-10-25T00:00:00Z">
     <img src="/artipress_data/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="article-card-thumbnail" />
     <div class="text-content">
         <div class="artipress-article-card-labels-empty"></div>
@@ -99,7 +100,7 @@ You can edit the article cards layout in the `article_item.html` template compon
         <p class="artipress-article-card-author-and-date">Majdi Jaigirdar | October 25, 2025</p>
     </div>
 </a>
-<a href="/articles/a-level-epq-navigating-ai-education-social-impacts/index.html" class="artipress-article-card">
+<a href="/articles/a-level-epq-navigating-ai-education-social-impacts/index.html" class="artipress-article-card" data-published="2023-05-15T00:00:00Z">
     <img src="/artipress_data/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png" alt="Hero image for A-Level EPQ: EPQ Navigating the social impacts of AI on education" class="article-card-thumbnail" />
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">A-Level</span><span class="artipress-article-card-label">EPQ</span></p>
@@ -108,7 +109,7 @@ You can edit the article cards layout in the `article_item.html` template compon
         <p class="artipress-article-card-author-and-date">Majdi Jaigirdar | May 15, 2023</p>
     </div>
 </a>
-<a href="/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/index.html" class="artipress-article-card">
+<a href="/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/index.html" class="artipress-article-card" data-published="2023-05-14T00:00:00Z">
     <img src="/artipress_data/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/images/image1.png" alt="Hero image for A-Level CS NEA: School register system for lower income countries" class="article-card-thumbnail" />
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">A-Level</span><span class="artipress-article-card-label">NEA</span></p>

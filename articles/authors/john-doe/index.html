@@ -54,6 +54,7 @@ You can edit the social link layout in the `author_social_link.html` template co
     You must include variable/section below in your author page template (In the <head> section) -->
     <link rel="stylesheet" href="/artipress_data/style/author_page_base.css" />
 <link rel="stylesheet" href="/artipress_data/style/article_list_cards.css" />
+<script src="/artipress_data/scripts/recently_published_label.js" defer></script>
 
     <!-- END ArtiPress (End of needed section)-->
 </head>
@@ -115,18 +116,18 @@ You can edit the social link layout in the `author_social_link.html` template co
 
             <!-- === ArtiPress ===
             Pre-rendered article cards grid (uses the same component/styling as the article list page) -->
-            <div class="artipress-articles-container">
+            <div class="artipress-articles-container" data-recently-published-hours="168">
 
-<a href="/articles/example-article-artipress/index.html" class="artipress-article-card">
+<a href="/articles/example-article-artipress/index.html" class="artipress-article-card" data-published="2026-05-21T00:00:00Z">
     <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="An example image for the article" class="article-card-thumbnail" />
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Example</span></p>
         <h3 class="artipress-article-card-title">An example article on Artipress</h3>
         <p class="artipress-article-card-description">An examplar article to demonstrate the structure and generation of an article in Artipress.</p>
-        <p class="artipress-article-card-author-and-date">John Doe | May 14, 2026</p>
+        <p class="artipress-article-card-author-and-date">John Doe | May 21, 2026</p>
     </div>
 </a>
-<a href="/articles/example-article/index.html" class="artipress-article-card">
+<a href="/articles/example-article/index.html" class="artipress-article-card" data-published="2026-05-14T00:00:00Z">
     <img src="/artipress_data/articles/example-article/image1.png" alt="An example image for the article" class="article-card-thumbnail" />
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Cooking</span></p>
